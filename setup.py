@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="Tetris2000",
-    version="0.2",
+    version="0.2.2",
     author="Adrien Malin",
     author_email="adrien.malin@protonmail.com",
     description="Another Tetris clone",
