@@ -1040,7 +1040,7 @@ class Stats(QtWidgets.QWidget):
         self.t_spin_total = 0
         self.mini_t_spin_total = 0
         self.nb_back_to_back = 0
-        self.back_to_back_scores = []
+        self.back_to_back_scores = None
         self.combo = -1
         self.combos_total = 0
         self.max_combo = 0
@@ -1118,12 +1118,12 @@ class Stats(QtWidgets.QWidget):
         # ==============================================================================
         if score:
             if (t_spin and nb_complete_lines) or nb_complete_lines == 4:
-                if len(self.back_to_back_scores) > 1:
+                if self.back_to_back_scores is not None:
                     self.back_to_back_scores.append(score // 2)
                 else:
                     # The first Line Clear in the Back-to-Back sequence
                     # does not receive the Back-to-Back Bonus.
-                    self.back_to_back_scores = [0]
+                    self.back_to_back_scores = []
             elif (nb_complete_lines and not t_spin) or len(
                 self.back_to_back_scores
             ) == 1:
@@ -1138,7 +1138,7 @@ class Stats(QtWidgets.QWidget):
                     b2b_score = sum(self.back_to_back_scores[1:])
                     self.score_total += b2b_score
                     self.nb_back_to_back += 1
-                    self.back_to_back_scores = []
+                    self.back_to_back_scores = None
                     self.temporary_text.emit(
                         self.tr("BACK TO BACK\n{:n}").format(b2b_score)
                     )
