@@ -1081,7 +1081,7 @@ class Stats(QtWidgets.QWidget):
             if (t_spin and nb_complete_lines) or nb_complete_lines == 4:
                 self.tetris_sound.play()
             if 1 <= nb_complete_lines <= 3:
-                self.tetris_sound.play()
+                self.line_clear_sound.play()
 
             self.goal -= score
             score = 100 * self.level * score
@@ -1089,11 +1089,42 @@ class Stats(QtWidgets.QWidget):
 
             self.temporary_text.emit(text + "\n{:n}".format(score))
 
-            # ==============================================================================
-            #         Combo
-            #         Bonus for complete lines on each consecutive lock downs
-            #         if nb_complete_lines:
-            # ==============================================================================
+# ==============================================================================
+#         Back-to_back sequence
+#         Two major bonus actions, such as two Tetrises, performed without
+#         a Single, Double, or Triple Line Clear occurring between them.
+#         Bonus for Tetrises, T-Spin Line Clears, and Mini T-Spin Line Clears
+#         performed consecutively in a B2B sequence.
+# ==============================================================================
+            if (t_spin and nb_complete_lines) or nb_complete_lines == 4:
+                if self.back_to_back_scores is not None:
+                    self.back_to_back_scores.append(score // 2)
+                else:
+                    # The first Line Clear in the Back-to-Back sequence
+                    # does not receive the Back-to-Back Bonus.
+                    self.back_to_back_scores = []
+            elif nb_complete_lines and not t_spin:
+                # A Back-to-Back sequence is only broken by a Single, Double, or Triple Line Clear.
+                # Locking down a Tetrimino without clearing a line
+                # or holding a Tetrimino does not break the Back-to-Back sequence.
+                # T-Spins and Mini T-Spins that do not clear any lines
+                # do not receive the Back-to-Back Bonus; instead they are scored as normal.
+                # They also cannot start a Back-to-Back sequence, however,
+                # they do not break an existing Back-to-Back sequence.
+                if self.back_to_back_scores:
+                    b2b_score = sum(self.back_to_back_scores)
+                    self.score_total += b2b_score
+                    self.nb_back_to_back += 1
+                    self.temporary_text.emit(
+                        self.tr("BACK TO BACK\n{:n}").format(b2b_score)
+                    )
+                self.back_to_back_scores = None
+                
+# ==============================================================================
+#         Combo
+#         Bonus for complete lines on each consecutive lock downs
+#         if nb_complete_lines:
+# ==============================================================================
             self.combo += 1
             if self.combo > 0:
                 if nb_complete_lines == 1:
@@ -1109,39 +1140,6 @@ class Stats(QtWidgets.QWidget):
         else:
             self.combo = -1
 
-        # ==============================================================================
-        #         Back-to_back sequence
-        #         Two major bonus actions, such as two Tetrises, performed without
-        #         a Single, Double, or Triple Line Clear occurring between them.
-        #         Bonus for Tetrises, T-Spin Line Clears, and Mini T-Spin Line Clears
-        #         performed consecutively in a B2B sequence.
-        # ==============================================================================
-        if score:
-            if (t_spin and nb_complete_lines) or nb_complete_lines == 4:
-                if self.back_to_back_scores is not None:
-                    self.back_to_back_scores.append(score // 2)
-                else:
-                    # The first Line Clear in the Back-to-Back sequence
-                    # does not receive the Back-to-Back Bonus.
-                    self.back_to_back_scores = []
-            elif (nb_complete_lines and not t_spin) or len(
-                self.back_to_back_scores
-            ) == 1:
-                # A Back-to-Back sequence is only broken by a Single, Double, or Triple Line Clear.
-                # Locking down a Tetrimino without clearing a line
-                # or holding a Tetrimino does not break the Back-to-Back sequence.
-                # T-Spins and Mini T-Spins that do not clear any lines
-                # do not receive the Back-to-Back Bonus; instead they are scored as normal.
-                # They also cannot start a Back-to-Back sequence, however,
-                # they do not break an existing Back-to-Back sequence.
-                if len(self.back_to_back_scores) > 1:
-                    b2b_score = sum(self.back_to_back_scores[1:])
-                    self.score_total += b2b_score
-                    self.nb_back_to_back += 1
-                    self.back_to_back_scores = None
-                    self.temporary_text.emit(
-                        self.tr("BACK TO BACK\n{:n}").format(b2b_score)
-                    )
 
         self.high_score = max(self.score_total, self.high_score)
         self.update()
