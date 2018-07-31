@@ -21,7 +21,7 @@ Or:
 
     pip3 install --user Tetris2000-PySide2
 
-If Python's script is in path, type:
+If Python's Scripts directory is in path, type:
 
     Tetris2000
     
@@ -36,7 +36,7 @@ Else on Linux:
 
 #### From [GitHub](https://github.com)
 
-* From a terminal, install PyQt5:
+From a terminal, install PyQt5:
 
     pip3 install --user PyQt5
     
@@ -44,7 +44,7 @@ or PySide2:
 
     pip3 install --user PySide2
     
-* Install qdarkstyle:
+Install qdarkstyle:
 
     pip3 install --user qdarkstyle
 
