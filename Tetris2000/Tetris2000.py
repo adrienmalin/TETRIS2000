@@ -45,12 +45,13 @@ else:
 
 # Consts
 # Paths
-ICON_PATH = "data/icons/icon.ico"
-bg_IMAGE_DIR = "data/backgrounds/"
-MUSIC_PATH = "data/sounds/Tetris - Song A.mp3"
-SOUNDS_DIR = "data/sounds/"
-LOCALE_PATH = "data/locale/"
-FONTS_DIR = "data/fonts/"
+PATH = os.path.dirname(os.path.abspath(__file__))
+ICON_PATH = os.path.join(PATH, "data", "icons", "icon.ico")
+bg_IMAGE_DIR = os.path.join(PATH, "data", "backgrounds")
+MUSIC_PATH = os.path.join(PATH, "data", "sounds", "Tetris - Song A.mp3")
+SOUNDS_DIR = os.path.join(PATH, "data", "sounds")
+LOCALE_PATH = os.path.join(PATH, "data", "locale")
+FONTS_DIR = os.path.join(PATH, "data", "fonts")
 # Coordinates and direction
 L, R, U, D = -1, 1, -1, 1  # Left, Right, Up, Down
 CLOCKWISE, COUNTERCLOCKWISE = 1, -1
@@ -614,11 +615,15 @@ class Matrix(Grid):
     def load_sounds(self):
         self.hard_drop_sound = QtMultimedia.QSoundEffect(self)
         self.hard_drop_sound.setSource(
-            QtCore.QUrl.fromLocalFile(SOUNDS_DIR + "hard_drop.wav")
+            QtCore.QUrl.fromLocalFile(
+                os.path.join(SOUNDS_DIR, "hard_drop.wav")
+            )
         )
         self.rotate_sound = QtMultimedia.QSoundEffect(self)
         self.rotate_sound.setSource(
-            QtCore.QUrl.fromLocalFile(SOUNDS_DIR + "rotate.wav")
+            QtCore.QUrl.fromLocalFile(
+                os.path.join(SOUNDS_DIR,"rotate.wav")
+            )
         )
 
     def apply_settings(self):
@@ -1023,11 +1028,15 @@ class Stats(QtWidgets.QWidget):
     def load_sounds(self):
         self.line_clear_sound = QtMultimedia.QSoundEffect(self)
         self.line_clear_sound.setSource(
-            QtCore.QUrl.fromLocalFile(SOUNDS_DIR + "line_clear.wav")
+            QtCore.QUrl.fromLocalFile(
+                os.path.join(SOUNDS_DIR, "line_clear.wav")
+            )
         )
         self.tetris_sound = QtMultimedia.QSoundEffect(self)
         self.tetris_sound.setSource(
-            QtCore.QUrl.fromLocalFile(SOUNDS_DIR + "tetris.wav")
+            QtCore.QUrl.fromLocalFile(
+                os.path.join(SOUNDS_DIR, "tetris.wav")
+            )
         )
         for sound in self.line_clear_sound, self.tetris_sound:
             sound.setVolume(settings[s.SOUND][s.EFFECTS_VOLUME])
@@ -1282,7 +1291,7 @@ class Frames(QtWidgets.QWidget):
         self.paused = False
 
         self.backgrounds = tuple(
-            QtGui.QImage(bg_IMAGE_DIR + entry.name)
+            QtGui.QImage(os.path.join(bg_IMAGE_DIR, entry.name))
             for entry in os.scandir(bg_IMAGE_DIR)
             if entry.is_file() and ".jpg" in entry.name
         )
@@ -1338,9 +1347,7 @@ class Frames(QtWidgets.QWidget):
     def load_music(self):
         playlist = QtMultimedia.QMediaPlaylist(self)
         music_path = QtMultimedia.QMediaContent(
-            QtCore.QUrl.fromLocalFile(
-                os.path.dirname(os.path.abspath(__file__)) + "/" + MUSIC_PATH
-            )
+            QtCore.QUrl.fromLocalFile(MUSIC_PATH)
         )
         playlist.addMedia(music_path)
         playlist.setPlaybackMode(QtMultimedia.QMediaPlaylist.Loop)
@@ -1666,7 +1673,9 @@ class Window(QtWidgets.QMainWindow):
             self.setStyleSheet(qdarkstyle.load_stylesheet_from_environment())
 
         for font_name in "maass slicer Italic.ttf", "PixelCaps!.otf":
-            QtGui.QFontDatabase.addApplicationFont(FONTS_DIR + font_name)
+            QtGui.QFontDatabase.addApplicationFont(
+                os.path.join(FONTS_DIR, font_name)
+            )
 
         self.frames = Frames(self)
         self.setCentralWidget(self.frames)

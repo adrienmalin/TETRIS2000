@@ -1,5 +1,5 @@
 import sys
-import Tetris2000
+from Tetris2000 import Tetris2000
 
 
 return_code = Tetris2000.main(sys.argv)
