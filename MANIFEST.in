@@ -1,0 +1,8 @@
+include README.md
+include Tetris2000/data/backgrounds\*.jpg
+include Tetris2000/data/fonts\*.ttf
+include Tetris2000/data/fonts\*.otf
+include Tetris2000/data/icons\icon.ico
+include Tetris2000/data/locale\*.qm
+include Tetris2000/data/sounds\*.wav
+include Tetris2000/data/sounds\*.mp3
