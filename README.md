@@ -14,7 +14,7 @@ As for now, qdarkstyle doesn't support PySide2 so PyQt5 is recommanded
 #### From [PyPI](https://pypi.org/)
 
     pip3 install --user Tetris2000
-    python -m Tetris2000
+    python3 -m Tetris2000
 
 #### From [GitHub](https://github.com)
 
