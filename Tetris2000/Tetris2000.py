@@ -47,7 +47,7 @@ else:
 # Paths
 PATH = os.path.dirname(os.path.abspath(__file__))
 ICON_PATH = os.path.join(PATH, "data", "icons", "icon.ico")
-bg_IMAGE_DIR = os.path.join(PATH, "data", "backgrounds")
+BG_IMAGE_DIR = os.path.join(PATH, "data", "backgrounds")
 MUSIC_PATH = os.path.join(PATH, "data", "sounds", "Tetris - Song A.mp3")
 SOUNDS_DIR = os.path.join(PATH, "data", "sounds")
 LOCALE_PATH = os.path.join(PATH, "data", "locale")
@@ -1291,8 +1291,8 @@ class Frames(QtWidgets.QWidget):
         self.paused = False
 
         self.backgrounds = tuple(
-            QtGui.QImage(os.path.join(bg_IMAGE_DIR, entry.name))
-            for entry in os.scandir(bg_IMAGE_DIR)
+            QtGui.QImage(os.path.join(BG_IMAGE_DIR, entry.name))
+            for entry in os.scandir(BG_IMAGE_DIR)
             if entry.is_file() and ".jpg" in entry.name
         )
         self.reset_backgrounds()
@@ -1346,10 +1346,14 @@ class Frames(QtWidgets.QWidget):
 
     def load_music(self):
         playlist = QtMultimedia.QMediaPlaylist(self)
-        music_path = QtMultimedia.QMediaContent(
-            QtCore.QUrl.fromLocalFile(MUSIC_PATH)
-        )
-        playlist.addMedia(music_path)
+        for entry in os.scandir(SOUNDS_DIR):
+            if entry.is_file() and ".mp3" in entry.name:
+                music_path = QtMultimedia.QMediaContent(
+                    QtCore.QUrl.fromLocalFile(
+                        os.path.join(SOUNDS_DIR, entry.name)
+                    )
+                )
+                playlist.addMedia(music_path)
         playlist.setPlaybackMode(QtMultimedia.QMediaPlaylist.Loop)
         self.music = QtMultimedia.QMediaPlayer(self)
         self.music.setAudioRole(QtMultimedia.QAudio.GameRole)
