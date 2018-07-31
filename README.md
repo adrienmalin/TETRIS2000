@@ -21,13 +21,18 @@ Or:
 
     pip3 install --user Tetris2000-PySide2
 
-Launch on Windows:
+If Python's script is in path, type:
+
+    Tetris2000
+    
+Else on Windows:
 
     python -m Tetris2000
 
-Launch on Linux:
+Else on Linux:
 
     python3 -m Tetris2000
+
 
 #### From [GitHub](https://github.com)
 
