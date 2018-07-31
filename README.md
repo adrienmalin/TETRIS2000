@@ -21,3 +21,4 @@ qdarkstyle by Colin Duquesnoy (https://github.com/ColinDuquesnoy/QDarkStyleSheet
     
 As for now, qdarkstyle doesn't support PySide2 so PyQt5 is recommanded
 
+On Linux, use pip3 instead of pip
