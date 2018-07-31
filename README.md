@@ -1,24 +1,30 @@
 # Tetris2000
 Another Tetris clone using Qt5 on Python 3.x
 
-Requires Python 3.x
+### Requirements
 
-Requires a Qt5 library:
+* Python 3.x
+* A Qt5 library (PyQt5 or PySide)
+* Optionnal: qdarkstyle (https://github.com/ColinDuquesnoy/QDarkStyleSheet)
 
-PyQt5 :
-
-    pip install PyQt5
-    
-  or PySide2 :
-  
-    pip install PySide2
-
-Optional stylesheet :
-
-qdarkstyle by Colin Duquesnoy (https://github.com/ColinDuquesnoy/QDarkStyleSheet)
-
-    pip install qdarkstyle
-    
 As for now, qdarkstyle doesn't support PySide2 so PyQt5 is recommanded
 
-On Linux, use pip3 instead of pip
+### Installation
+
+#### From [PyPI](https://pypi.org/)
+
+    pip3 install --user Tetris2000
+    python -m Tetris2000
+
+#### From [GitHub](https://github.com)
+
+    pip3 install --user PyQt5
+    pip3 install --user qdarkstyle
+    
+or
+
+    pip3 install --user PySide2
+
+* Download the archive from [GitHub](https://github.com/adrienmalin\☻Tetris2000)
+* Unzip the archive
+* Launch Tetris2000.py
