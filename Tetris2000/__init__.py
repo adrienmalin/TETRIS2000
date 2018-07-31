@@ -1,1 +1,1 @@
-import Tetris2000
+from . import Tetris2000

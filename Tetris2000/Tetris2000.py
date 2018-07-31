@@ -23,18 +23,19 @@ import collections
 
 try:  # PyQt5
     from PyQt5 import QtWidgets, QtCore, QtGui, QtMultimedia
-except ImportError:
+except ImportError as pyqt5_error:
     try:  # PySide2
         from PySide2 import QtWidgets, QtCore, QtGui, QtMultimedia
-    except ImportError:
+    except ImportError as pyside2_error:
         sys.exit(
-            "This program require a Qt library.\n"
-            "You can install PyQt5 package (recommended) :\n"
-            "    pip install PyQt5\n"
-            "or PySide2 package :\n"
-            "    pip install PySide2\n"
-            "NB : On Windows, PySide2 may require to install\n"
-            "Visual C++ Redistributable Packages separately."
+            "This program require a Qt5 library.\n"
+            "You can install PyQt5 (recommended) :\n"
+            "    pip3 install --user PyQt5\n"
+            "    pip3 install --user qdarkstyle\n"
+            "or PySide2 :\n"
+            "    pip3 install --user PySide2\n"
+            + pyqt5_error.msg + "\n"
+            + pyside2_error.msg
         )
     else:
         os.environ["QT_API"] = "pyside2"
@@ -109,11 +110,11 @@ class Block:
     FILL_COLOR = QtGui.QColor(0, 159, 218, 25)
     GLOWING_BORDER_COLOR = None
     GLOWING_FILL_COLOR = QtGui.QColor(186, 211, 255, 70)
-    LIGHT_COLOR = QtGui.QColor(204, 255, 255, 40)
+    LIGHT_COLOR = QtGui.QColor(242, 255, 255, 40)
     TRANSPARENT = QtGui.QColor(255, 255, 255, 0)
     GLOWING = 0
 
-    side = 0
+    side = 20
 
     def __init__(self, coord, trail=0):
         self.coord = coord
