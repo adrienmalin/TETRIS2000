@@ -107,8 +107,8 @@ class Block:
     BORDER_COLOR = QtGui.QColor(0, 159, 218, 255)
     FILL_COLOR = QtGui.QColor(0, 159, 218, 25)
     GLOWING_BORDER_COLOR = None
-    GLOWING_FILL_COLOR = QtGui.QColor(169, 204, 216, 50)
-    LIGHT_COLOR = QtGui.QColor(204, 255, 255, 70)
+    GLOWING_FILL_COLOR = QtGui.QColor(186, 211, 255, 70)
+    LIGHT_COLOR = QtGui.QColor(204, 255, 255, 40)
     TRANSPARENT = QtGui.QColor(255, 255, 255, 0)
     GLOWING = 0
 
@@ -124,7 +124,7 @@ class Block:
     def paint(self, painter, top_left_corner, spotlight):
         p = top_left_corner + self.coord * Block.side
         self.center = p + QtCore.QPoint(Block.side / 2, Block.side / 2)
-        self.glint = 0.10 * Block.side * spotlight + 0.90 * self.center
+        self.glint = 0.15 * Block.side * spotlight + 0.85 * self.center
 
         if self.trail:
             start = (
@@ -1088,43 +1088,13 @@ class Stats(QtWidgets.QWidget):
             self.score_total += score
 
             self.temporary_text.emit(text + "\n{:n}".format(score))
-
-# ==============================================================================
-#         Back-to_back sequence
-#         Two major bonus actions, such as two Tetrises, performed without
-#         a Single, Double, or Triple Line Clear occurring between them.
-#         Bonus for Tetrises, T-Spin Line Clears, and Mini T-Spin Line Clears
-#         performed consecutively in a B2B sequence.
-# ==============================================================================
-            if (t_spin and nb_complete_lines) or nb_complete_lines == 4:
-                if self.back_to_back_scores is not None:
-                    self.back_to_back_scores.append(score // 2)
-                else:
-                    # The first Line Clear in the Back-to-Back sequence
-                    # does not receive the Back-to-Back Bonus.
-                    self.back_to_back_scores = []
-            elif nb_complete_lines and not t_spin:
-                # A Back-to-Back sequence is only broken by a Single, Double, or Triple Line Clear.
-                # Locking down a Tetrimino without clearing a line
-                # or holding a Tetrimino does not break the Back-to-Back sequence.
-                # T-Spins and Mini T-Spins that do not clear any lines
-                # do not receive the Back-to-Back Bonus; instead they are scored as normal.
-                # They also cannot start a Back-to-Back sequence, however,
-                # they do not break an existing Back-to-Back sequence.
-                if self.back_to_back_scores:
-                    b2b_score = sum(self.back_to_back_scores)
-                    self.score_total += b2b_score
-                    self.nb_back_to_back += 1
-                    self.temporary_text.emit(
-                        self.tr("BACK TO BACK\n{:n}").format(b2b_score)
-                    )
-                self.back_to_back_scores = None
                 
 # ==============================================================================
 #         Combo
 #         Bonus for complete lines on each consecutive lock downs
 #         if nb_complete_lines:
 # ==============================================================================
+        if nb_complete_lines:
             self.combo += 1
             if self.combo > 0:
                 if nb_complete_lines == 1:
@@ -1140,6 +1110,36 @@ class Stats(QtWidgets.QWidget):
         else:
             self.combo = -1
 
+# ==============================================================================
+#         Back-to_back sequence
+#         Two major bonus actions, such as two Tetrises, performed without
+#         a Single, Double, or Triple Line Clear occurring between them.
+#         Bonus for Tetrises, T-Spin Line Clears, and Mini T-Spin Line Clears
+#         performed consecutively in a B2B sequence.
+# ==============================================================================
+        if (t_spin and nb_complete_lines) or nb_complete_lines == 4:
+            if self.back_to_back_scores is not None:
+                self.back_to_back_scores.append(score // 2)
+            else:
+                # The first Line Clear in the Back-to-Back sequence
+                # does not receive the Back-to-Back Bonus.
+                self.back_to_back_scores = []
+        elif nb_complete_lines and not t_spin:
+            # A Back-to-Back sequence is only broken by a Single, Double, or Triple Line Clear.
+            # Locking down a Tetrimino without clearing a line
+            # or holding a Tetrimino does not break the Back-to-Back sequence.
+            # T-Spins and Mini T-Spins that do not clear any lines
+            # do not receive the Back-to-Back Bonus; instead they are scored as normal.
+            # They also cannot start a Back-to-Back sequence, however,
+            # they do not break an existing Back-to-Back sequence.
+            if self.back_to_back_scores:
+                b2b_score = sum(self.back_to_back_scores)
+                self.score_total += b2b_score
+                self.nb_back_to_back += 1
+                self.temporary_text.emit(
+                    self.tr("BACK TO BACK\n{:n}").format(b2b_score)
+                )
+            self.back_to_back_scores = None
 
         self.high_score = max(self.score_total, self.high_score)
         self.update()
@@ -1912,7 +1912,7 @@ class Window(QtWidgets.QMainWindow):
         qsettings.setValue("WindowState", int(self.windowState()))
 
 
-def main(args):
+def main(args={}):
     app = QtWidgets.QApplication.instance() or QtWidgets.QApplication(args)
     win = Window()
     return app.exec_()
