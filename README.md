@@ -18,7 +18,7 @@ As for now, qdarkstyle doesn't support PySide2 so PyQt5 is recommanded
 
 #### From [GitHub](https://github.com)
 
-* Install PyQt5 and qdarkstyle
+Install PyQt5 and qdarkstyle
 
     pip3 install --user PyQt5
     pip3 install --user qdarkstyle
