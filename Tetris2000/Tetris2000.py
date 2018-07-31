@@ -1926,7 +1926,7 @@ class Window(QtWidgets.QMainWindow):
         qsettings.setValue("WindowState", int(self.windowState()))
 
 
-def main(args={}):
+def main(args=[]):
     app = QtWidgets.QApplication.instance() or QtWidgets.QApplication(args)
     win = Window()
     return app.exec_()
