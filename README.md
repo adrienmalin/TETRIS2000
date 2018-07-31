@@ -5,7 +5,7 @@ Another Tetris clone using Qt5 on Python 3.x
 
 * Python 3.x
 * A Qt5 library (PyQt5 or PySide)
-* Optionnal: [qdarkstyle](https://github.com/ColinDuquesnoy/QDarkStyleSheet)
+* Optionnal: [qdarkstyle](https://github.com/ColinDuquesnoy/QDarkStyleSheet) stylesheet
 
 As for now, qdarkstyle doesn't support PySide2 so PyQt5 is recommanded
 
