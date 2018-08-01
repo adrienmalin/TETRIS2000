@@ -11,6 +11,10 @@ As for now, qdarkstyle doesn't support PySide2 so PyQt5 is recommanded
 
 ### Installation
 
+#### Self-extracting archive for Windows
+
+[Download](https://github.com/adrienmalin/Tetris2000/raw/master/Tetris2000.exe) (24 Mo)
+
 #### From [PyPI](https://pypi.org/)
 
 Open a terminal and type:
