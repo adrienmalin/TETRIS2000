@@ -19,7 +19,7 @@ class Grid(QtWidgets.QWidget):
     COLUMNS = consts.GRID_DEFAULT_COLUMNS
     STARTING_POSITION = Point(
         consts.GRID_DEFAULT_COLUMNS // 2,
-        consts.GRID_DEFAULT_ROWS // 2 + 2
+        consts.GRID_DEFAULT_ROWS // 2 + consts.GRID_INVISIBLE_ROWS
     )
     GRIDLINE_COLOR = consts.GRID_GRIDLINE_COLOR 
     HARD_DROP_MOVEMENT = consts.GRID_HARD_DROP_MOVEMENT
