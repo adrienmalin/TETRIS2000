@@ -299,4 +299,3 @@ class GhostPiece(Tetromino):
     def hard_drop(self):
         while self.move(0, D):
             pass
-
