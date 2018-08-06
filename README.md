@@ -21,15 +21,15 @@ As for now, qdarkstyle doesn't support PySide2 so PyQt5 is recommanded
 
 * From a terminal, install PyQt5:
 
-    pip3 install --user PyQt5
+      pip3 install --user PyQt5
     
-or PySide2:
+    or PySide2:
 
-    pip3 install --user PySide2
+      pip3 install --user PySide2
     
 * Install qdarkstyle:
 
-    pip3 install --user qdarkstyle
+      pip3 install --user qdarkstyle
 
 * Download the [archive from GitHub](https://github.com/adrienmalin/Tetris2000)
 * Unzip the archive
