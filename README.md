@@ -31,7 +31,7 @@ or PySide2:
 
     pip3 install --user qdarkstyle
 
-* Download the archive from [GitHub](https://github.com/adrienmalin/Tetris2000)
+* Download the [archive from GitHub](https://github.com/adrienmalin/Tetris2000)
 * Unzip the archive
 * Launch Tetris2000.py
 
