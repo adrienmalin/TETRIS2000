@@ -35,11 +35,11 @@ class Grid(QtWidgets.QWidget):
     COLUMNS = consts.GRID_DEFAULT_COLUMNS
     STARTING_POSITION = Point(
         consts.GRID_DEFAULT_COLUMNS // 2,
-        consts.GRID_DEFAULT_ROWS // 2 + consts.GRID_INVISIBLE_ROWS
+        consts.GRID_DEFAULT_ROWS // 2 + consts.GRID_INVISIBLE_ROWS,
     )
-    GRIDLINE_COLOR = consts.GRID_GRIDLINE_COLOR 
+    GRIDLINE_COLOR = consts.GRID_GRIDLINE_COLOR
     HARD_DROP_MOVEMENT = consts.GRID_HARD_DROP_MOVEMENT
-    SPOTLIGHT = Point(*consts.GRID_SPOTLIGHT )
+    SPOTLIGHT = Point(*consts.GRID_SPOTLIGHT)
 
     def __init__(self, frames):
         super().__init__(frames)
@@ -68,7 +68,7 @@ class Grid(QtWidgets.QWidget):
     def paintEvent(self, event=None):
         painter = QtGui.QPainter(self)
         painter.setRenderHint(QtGui.QPainter.Antialiasing)
-        
+
         self.paint_grid(painter)
 
         if (not self.frames.paused or not self.frames.playing) and self.piece:
@@ -78,7 +78,9 @@ class Grid(QtWidgets.QWidget):
         painter.setPen(self.GRIDLINE_COLOR)
         for x in (self.left + i * Block.side for i in range(self.COLUMNS + 1)):
             painter.drawLine(x, self.grid_top, x, self.bottom)
-        for y in (j * Block.side for j in range(consts.GRID_INVISIBLE_ROWS, self.ROWS + 1)):
+        for y in (
+            j * Block.side for j in range(consts.GRID_INVISIBLE_ROWS, self.ROWS + 1)
+        ):
             painter.drawLine(self.left, y, self.right, y)
 
     def paint_piece(self, painter, piece):
@@ -102,7 +104,7 @@ class Matrix(Grid):
 
     def __init__(self, frames):
         super().__init__(frames)
-        
+
         self.load_sfx()
 
         self.game_over = False
@@ -118,20 +120,20 @@ class Matrix(Grid):
         self.fall_timer.timeout.connect(self.fall)
 
         self.cells = []
-        
+
     def load_sfx(self):
         self.wall_sfx = QtMultimedia.QSoundEffect(self)
         url = QtCore.QUrl.fromLocalFile(consts.WALL_SFX_PATH)
         self.wall_sfx.setSource(url)
-        
+
         self.rotate_sfx = QtMultimedia.QSoundEffect(self)
         url = QtCore.QUrl.fromLocalFile(consts.ROTATE_SFX_PATH)
         self.rotate_sfx.setSource(url)
-        
+
         self.hard_drop_sfx = QtMultimedia.QSoundEffect(self)
         url = QtCore.QUrl.fromLocalFile(consts.HARD_DROP_SFX_PATH)
         self.hard_drop_sfx.setSource(url)
-        
+
     def new_game(self):
         self.game_over = False
         self.lock_delay = consts.LOCK_DELAY
@@ -194,7 +196,7 @@ class Matrix(Grid):
             for mino in self.piece.minoes:
                 mino.fade()
             self.update()
-            
+
     def auto_repeat_wait(self):
         self.auto_repeat_delay = (
             time.time() + settings[s.DELAYS][s.AUTO_SHIFT_DELAY] / 1000
@@ -329,9 +331,9 @@ class Matrix(Grid):
         it is given a delay (self.fall_delay) on a Lock Down Timer
         before it actually Locks Down.
         """
-        
+
         self.wall_sfx.play()
-        
+
         #  Enter minoes into the matrix
         for mino in self.piece.minoes:
             if mino.coord.y() >= 0:
@@ -339,7 +341,9 @@ class Matrix(Grid):
             mino.shine(glowing=2, delay=consts.ANIMATION_DELAY)
         self.update()
 
-        if all(mino.coord.y() < consts.GRID_INVISIBLE_ROWS for mino in self.piece.minoes):
+        if all(
+            mino.coord.y() < consts.GRID_INVISIBLE_ROWS for mino in self.piece.minoes
+        ):
             self.frames.game_over()
             return
 
@@ -371,7 +375,6 @@ class Matrix(Grid):
             QtCore.QTimer.singleShot(consts.LINE_CLEAR_DELAY, self.eliminate_phase)
         else:
             self.frames.new_piece()
-
 
     def eliminate_phase(self):
         """
@@ -543,6 +546,7 @@ class AspectRatioWidget(QtWidgets.QWidget):
         self.layout().setStretch(1, widget_stretch)
         self.layout().setStretch(2, outer_stretch)
 
+
 class Stats(QtWidgets.QWidget):
     """
     Show informations relevant to the game being played is displayed on-screen.
@@ -577,7 +581,7 @@ class Stats(QtWidgets.QWidget):
         self.line_clear_sfx = QtMultimedia.QSoundEffect(self)
         url = QtCore.QUrl.fromLocalFile(consts.LINE_CLEAR_SFX_PATH)
         self.line_clear_sfx.setSource(url)
-        
+
         self.tetris_sfx = QtMultimedia.QSoundEffect(self)
         url = QtCore.QUrl.fromLocalFile(consts.TETRIS_SFX_PATH)
         self.tetris_sfx.setSource(url)
@@ -638,12 +642,12 @@ class Stats(QtWidgets.QWidget):
             self.score_total += score
 
             self.temporary_text.emit(text + "\n{:n}".format(score))
-                
-# ==============================================================================
-#         Combo
-#         Bonus for complete lines on each consecutive lock downs
-#         if nb_complete_lines:
-# ==============================================================================
+
+        # ==============================================================================
+        #         Combo
+        #         Bonus for complete lines on each consecutive lock downs
+        #         if nb_complete_lines:
+        # ==============================================================================
         if nb_complete_lines:
             self.combo += 1
             if self.combo > 0:
@@ -660,13 +664,13 @@ class Stats(QtWidgets.QWidget):
         else:
             self.combo = -1
 
-# ==============================================================================
-#         Back-to_back sequence
-#         Two major bonus actions, such as two Tetrises, performed without
-#         a Single, Double, or Triple Line Clear occurring between them.
-#         Bonus for Tetrises, T-Spin Line Clears, and Mini T-Spin Line Clears
-#         performed consecutively in a B2B sequence.
-# ==============================================================================
+        # ==============================================================================
+        #         Back-to_back sequence
+        #         Two major bonus actions, such as two Tetrises, performed without
+        #         a Single, Double, or Triple Line Clear occurring between them.
+        #         Bonus for Tetrises, T-Spin Line Clears, and Mini T-Spin Line Clears
+        #         performed consecutively in a B2B sequence.
+        # ==============================================================================
         if (t_spin and nb_complete_lines) or nb_complete_lines == 4:
             if self.back_to_back_scores is not None:
                 self.back_to_back_scores.append(score // 2)
@@ -781,8 +785,8 @@ class Stats(QtWidgets.QWidget):
 
     def resizeEvent(self, event):
         self.font = QtGui.QFont(consts.STATS_FONT_NAME, Block.side / 3.5)
-        
-        
+
+
 class Frames(QtWidgets.QWidget):
     """
     Display Hold queue, Matrix, Next piece, Next queue and Stats.
@@ -822,7 +826,13 @@ class Frames(QtWidgets.QWidget):
             self.hold_queue, y, x, self.hold_queue.ROWS + 1, self.hold_queue.COLUMNS + 2
         )
         x += self.hold_queue.COLUMNS + 2
-        grid.addWidget(self.matrix, y, x, self.matrix.ROWS + consts.GRID_INVISIBLE_ROWS, self.matrix.COLUMNS + 2)
+        grid.addWidget(
+            self.matrix,
+            y,
+            x,
+            self.matrix.ROWS + consts.GRID_INVISIBLE_ROWS,
+            self.matrix.COLUMNS + 2,
+        )
         x += self.matrix.COLUMNS + 3
         grid.addWidget(
             self.next_piece, y, x, self.next_piece.ROWS + 1, self.next_piece.COLUMNS + 2
@@ -843,9 +853,11 @@ class Frames(QtWidgets.QWidget):
         self.stats.temporary_text.connect(self.matrix.show_temporary_text)
         self.matrix.drop_signal.connect(self.stats.update_drop_score)
         self.matrix.lock_signal.connect(self.stats.update_score)
-        
-        self.set_background(os.path.join(consts.BG_IMAGE_DIR, consts.START_BG_IMAGE_NAME))
-        
+
+        self.set_background(
+            os.path.join(consts.BG_IMAGE_DIR, consts.START_BG_IMAGE_NAME)
+        )
+
         self.apply_settings()
 
     def load_music(self):
@@ -860,27 +872,29 @@ class Frames(QtWidgets.QWidget):
         self.music.setAudioRole(QtMultimedia.QAudio.GameRole)
         self.music.setPlaylist(playlist)
         self.music.setVolume(settings[s.SOUND][s.MUSIC_VOLUME])
-        
+
     def apply_settings(self):
         if self.music.volume() > 5 and self.playing:
             self.music.play()
         else:
             self.music.pause()
-            
+
         if self.playing:
             self.hold_enabled = settings[s.OTHER][s.HOLD_ENABLED]
             self.pause(False)
-            
+
         self.matrix.keys = {
             getattr(QtCore.Qt, "Key_" + name): action
             for action, name in settings[s.KEYBOARD].items()
         }
         self.matrix.auto_repeat_timer.start(settings[s.DELAYS][s.AUTO_REPEAT_RATE])
         self.matrix.spotlight = Matrix.SPOTLIGHT
-        
+
         for sfx in (
-            self.matrix.rotate_sfx, self.matrix.wall_sfx,
-            self.stats.line_clear_sfx, self.stats.tetris_sfx
+            self.matrix.rotate_sfx,
+            self.matrix.wall_sfx,
+            self.stats.line_clear_sfx,
+            self.stats.tetris_sfx,
         ):
             sfx.setVolume(settings[s.SOUND][s.SFX_VOLUME])
 
@@ -904,22 +918,20 @@ class Frames(QtWidgets.QWidget):
         self.resized_bg_image = self.resized_bg_image.scaled(
             self.size(),
             QtCore.Qt.KeepAspectRatioByExpanding,
-            QtCore.Qt.SmoothTransformation
+            QtCore.Qt.SmoothTransformation,
         )
         self.resized_bg_image = self.resized_bg_image.copy(
             (self.resized_bg_image.width() - self.width()) // 2,
             (self.resized_bg_image.height() - self.height()) // 2,
             self.width(),
-            self.height()
+            self.height(),
         )
         self.update()
 
     def paintEvent(self, event):
         painter = QtGui.QPainter(self)
-        painter.drawPixmap(
-            self.rect(),
-            self.resized_bg_image)
-        
+        painter.drawPixmap(self.rect(), self.resized_bg_image)
+
     def new_game(self):
         if self.playing:
             answer = QtWidgets.QMessageBox.question(
@@ -1045,21 +1057,22 @@ class Frames(QtWidgets.QWidget):
         msgbox.setIcon(QtWidgets.QMessageBox.Information)
         if self.stats.score_total == self.stats.high_score:
             msgbox.setText(
-                self.tr(
-                    "Congratulations!\nYou have the high score: {}"
-                ).format(
-                    
-                    locale.format("%i", self.stats.high_score, grouping=True, monetary=True)
+                self.tr("Congratulations!\nYou have the high score: {}").format(
+                    locale.format(
+                        "%i", self.stats.high_score, grouping=True, monetary=True
+                    )
                 )
             )
             qsettings.setValue(self.tr("High score"), self.stats.high_score)
         else:
             msgbox.setText(
-                self.tr(
-                    "Score: {}\nHigh score: {}"
-                ).format(
-                    locale.format("%i", self.stats.score_total, grouping=True, monetary=True),
-                    locale.format("%i", self.stats.high_score, grouping=True, monetary=True)
+                self.tr("Score: {}\nHigh score: {}").format(
+                    locale.format(
+                        "%i", self.stats.score_total, grouping=True, monetary=True
+                    ),
+                    locale.format(
+                        "%i", self.stats.high_score, grouping=True, monetary=True
+                    ),
                 )
             )
         msgbox.setDetailedText(self.stats.text(full_stats=True))
@@ -1178,13 +1191,16 @@ class SettingsDialog(QtWidgets.QDialog):
             parent.frames.music.setVolume
         )
         self.groups[s.SOUND].widgets[s.MUSIC_VOLUME].sliderPressed.connect(
-            parent.frames.music.play)
+            parent.frames.music.play
+        )
         self.groups[s.SOUND].widgets[s.MUSIC_VOLUME].sliderReleased.connect(
-            parent.frames.music.pause)
-        
+            parent.frames.music.pause
+        )
+
         self.groups[s.SOUND].widgets[s.SFX_VOLUME].sliderReleased.connect(
-            parent.frames.stats.line_clear_sfx.play)
-        
+            parent.frames.stats.line_clear_sfx.play
+        )
+
         self.show()
 
     def ok(self):
@@ -1213,11 +1229,11 @@ class Window(QtWidgets.QMainWindow):
             QtGui.QPixmap(consts.SPLASH_SCREEN_PATH)
         )
         splash_screen.show()
-        
+
         self.set_locale()
 
         self.load_settings()
-        
+
         super().__init__()
         self.setWindowTitle(__title__.upper())
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
@@ -1261,7 +1277,7 @@ class Window(QtWidgets.QMainWindow):
             )
         )
 
-        splash_screen.finish(self);
+        splash_screen.finish(self)
 
     def set_locale(self):
         app = QtWidgets.QApplication.instance()
@@ -1281,7 +1297,7 @@ class Window(QtWidgets.QMainWindow):
         tetris2000_translator = QtCore.QTranslator(app)
         if tetris2000_translator.load(language, consts.LOCALE_PATH):
             app.installTranslator(tetris2000_translator)
-            
+
     def load_settings(self):
         global s
         s = SettingStrings()
@@ -1296,18 +1312,23 @@ class Window(QtWidgets.QMainWindow):
                         [
                             (
                                 s.MOVE_LEFT,
-                                qsettings.value(s.KEYBOARD + "/" + s.MOVE_LEFT, consts.DEFAULT_MOVE_LEFT_KEY),
+                                qsettings.value(
+                                    s.KEYBOARD + "/" + s.MOVE_LEFT,
+                                    consts.DEFAULT_MOVE_LEFT_KEY,
+                                ),
                             ),
                             (
                                 s.MOVE_RIGHT,
                                 qsettings.value(
-                                    s.KEYBOARD + "/" + s.MOVE_RIGHT, consts.DEFAULT_MOVE_RIGHT_KEY
+                                    s.KEYBOARD + "/" + s.MOVE_RIGHT,
+                                    consts.DEFAULT_MOVE_RIGHT_KEY,
                                 ),
                             ),
                             (
                                 s.ROTATE_CLOCKWISE,
                                 qsettings.value(
-                                    s.KEYBOARD + "/" + s.ROTATE_CLOCKWISE, consts.DEFAULT_ROTATE_CLOCKWISE_KEY
+                                    s.KEYBOARD + "/" + s.ROTATE_CLOCKWISE,
+                                    consts.DEFAULT_ROTATE_CLOCKWISE_KEY,
                                 ),
                             ),
                             (
@@ -1319,21 +1340,29 @@ class Window(QtWidgets.QMainWindow):
                             ),
                             (
                                 s.SOFT_DROP,
-                                qsettings.value(s.KEYBOARD + "/" + s.SOFT_DROP, consts.DEFAULT_SOFT_DROP_KEY),
+                                qsettings.value(
+                                    s.KEYBOARD + "/" + s.SOFT_DROP,
+                                    consts.DEFAULT_SOFT_DROP_KEY,
+                                ),
                             ),
                             (
                                 s.HARD_DROP,
                                 qsettings.value(
-                                    s.KEYBOARD + "/" + s.HARD_DROP, consts.DEFAULT_HARD_DROP_KEY
+                                    s.KEYBOARD + "/" + s.HARD_DROP,
+                                    consts.DEFAULT_HARD_DROP_KEY,
                                 ),
                             ),
                             (
                                 s.HOLD,
-                                qsettings.value(s.KEYBOARD + "/" + s.HOLD, consts.DEFAULT_HOLD_KEY),
+                                qsettings.value(
+                                    s.KEYBOARD + "/" + s.HOLD, consts.DEFAULT_HOLD_KEY
+                                ),
                             ),
                             (
                                 s.PAUSE,
-                                qsettings.value(s.KEYBOARD + "/" + s.PAUSE, consts.DEFAULT_PAUSE_KEY),
+                                qsettings.value(
+                                    s.KEYBOARD + "/" + s.PAUSE, consts.DEFAULT_PAUSE_KEY
+                                ),
                             ),
                         ]
                     ),
@@ -1346,7 +1375,8 @@ class Window(QtWidgets.QMainWindow):
                                 s.AUTO_SHIFT_DELAY,
                                 int(
                                     qsettings.value(
-                                        s.DELAYS + "/" + s.AUTO_SHIFT_DELAY, consts.DEFAULT_AUTO_SHIFT_DELAY
+                                        s.DELAYS + "/" + s.AUTO_SHIFT_DELAY,
+                                        consts.DEFAULT_AUTO_SHIFT_DELAY,
                                     )
                                 ),
                             ),
@@ -1354,7 +1384,8 @@ class Window(QtWidgets.QMainWindow):
                                 s.AUTO_REPEAT_RATE,
                                 int(
                                     qsettings.value(
-                                        s.DELAYS + "/" + s.AUTO_REPEAT_RATE, consts.DEFAULT_AUTO_REPEAT_RATE
+                                        s.DELAYS + "/" + s.AUTO_REPEAT_RATE,
+                                        consts.DEFAULT_AUTO_REPEAT_RATE,
                                     )
                                 ),
                             ),
@@ -1368,14 +1399,18 @@ class Window(QtWidgets.QMainWindow):
                             (
                                 s.MUSIC_VOLUME,
                                 int(
-                                    qsettings.value(s.SOUND + "/" + s.MUSIC_VOLUME, consts.DEFAUT_MUSIC_VOLUME)
+                                    qsettings.value(
+                                        s.SOUND + "/" + s.MUSIC_VOLUME,
+                                        consts.DEFAUT_MUSIC_VOLUME,
+                                    )
                                 ),
                             ),
                             (
                                 s.SFX_VOLUME,
                                 int(
                                     qsettings.value(
-                                        s.SOUND + "/" + s.SFX_VOLUME, consts.DEFAULT_SFX_VOLUME
+                                        s.SOUND + "/" + s.SFX_VOLUME,
+                                        consts.DEFAULT_SFX_VOLUME,
                                     )
                                 ),
                             ),
@@ -1388,13 +1423,19 @@ class Window(QtWidgets.QMainWindow):
                         [
                             (
                                 s.GHOST,
-                                bool(qsettings.value(s.OTHER + "/" + s.GHOST, consts.DEFAULT_SHOW_GHOST)),
+                                bool(
+                                    qsettings.value(
+                                        s.OTHER + "/" + s.GHOST,
+                                        consts.DEFAULT_SHOW_GHOST,
+                                    )
+                                ),
                             ),
                             (
                                 s.SHOW_NEXT_QUEUE,
                                 bool(
                                     qsettings.value(
-                                        s.OTHER + "/" + s.SHOW_NEXT_QUEUE, consts.DEFAULT_SHOW_NEXT_QUEUE
+                                        s.OTHER + "/" + s.SHOW_NEXT_QUEUE,
+                                        consts.DEFAULT_SHOW_NEXT_QUEUE,
                                     )
                                 ),
                             ),
@@ -1402,7 +1443,8 @@ class Window(QtWidgets.QMainWindow):
                                 s.HOLD_ENABLED,
                                 bool(
                                     qsettings.value(
-                                        s.OTHER + "/" + s.HOLD_ENABLED, consts.DEFAULT_HOLD_ENABLED
+                                        s.OTHER + "/" + s.HOLD_ENABLED,
+                                        consts.DEFAULT_HOLD_ENABLED,
                                     )
                                 ),
                             ),
@@ -1430,7 +1472,7 @@ class Window(QtWidgets.QMainWindow):
 
     def show_settings_dialog(self):
         SettingsDialog(self).exec_()
-        
+
         self.frames.apply_settings()
 
     def about(self):
@@ -1438,7 +1480,7 @@ class Window(QtWidgets.QMainWindow):
             self,
             __title__,
             self.tr(
-"""Tetris® clone by Adrien Malingrey
+                """Tetris® clone by Adrien Malingrey
 
 Tetris Game Design by Alekseï Pajitnov
 Graphism inspired by Tetris Effect
@@ -1479,8 +1521,8 @@ Sound effects made with voc-one by Simple-Media"""
         qsettings.setValue(self.tr("High score"), self.stats.high_score)
         qsettings.setValue("WindowGeometry", self.saveGeometry())
         qsettings.setValue("WindowState", int(self.windowState()))
-        
-        
+
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication.instance() or QtWidgets.QApplication(sys.argv)
     win = Window()

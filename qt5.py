@@ -17,7 +17,8 @@ except ImportError as pyqt5_error:
             "    pip3 install --user qdarkstyle\n"
             "or PySide2 :\n"
             "    pip3 install --user PySide2\n"
-            + pyqt5_error.msg + "\n"
+            + pyqt5_error.msg
+            + "\n"
             + pyside2_error.msg
         )
     else:

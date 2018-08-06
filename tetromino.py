@@ -108,8 +108,7 @@ class Tetromino:
         Update the Grid if there is no drop trail
         """
         return self._try_movement(
-            (block.coord + Point(horizontally, vertically)
-             for block in self.minoes),
+            (block.coord + Point(horizontally, vertically) for block in self.minoes),
             trail,
         )
 

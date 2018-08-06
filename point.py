@@ -5,6 +5,7 @@
 from consts import CLOCKWISE
 from qt5 import QtCore
 
+
 class Point(QtCore.QPoint):
     """
     Point of coordinates (x, y)
@@ -37,8 +38,8 @@ class Point(QtCore.QPoint):
     __rsub__ = __sub__
     __rmul__ = __mul__
     __rtruediv__ = __truediv__
-    
+
     def __repr__(self):
         return "Point({}, {})".format(self.x(), self.y())
-    
+
     __str__ = __repr__

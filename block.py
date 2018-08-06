@@ -19,13 +19,13 @@ class Block:
     # Colors
     BORDER_COLOR = consts.BLOCK_BORDER_COLOR
     FILL_COLOR = consts.BLOCK_FILL_COLOR
-    GLOWING_BORDER_COLOR = consts.BLOCK_GLOWING_BORDER_COLOR 
-    GLOWING_FILL_COLOR = consts.BLOCK_GLOWING_FILL_COLOR 
-    LIGHT_COLOR = consts.BLOCK_LIGHT_COLOR 
-    TRANSPARENT = consts.BLOCK_TRANSPARENT 
-    GLOWING = consts.BLOCK_GLOWING 
+    GLOWING_BORDER_COLOR = consts.BLOCK_GLOWING_BORDER_COLOR
+    GLOWING_FILL_COLOR = consts.BLOCK_GLOWING_FILL_COLOR
+    LIGHT_COLOR = consts.BLOCK_LIGHT_COLOR
+    TRANSPARENT = consts.BLOCK_TRANSPARENT
+    GLOWING = consts.BLOCK_GLOWING
 
-    side = consts.BLOCK_INITIAL_SIDE 
+    side = consts.BLOCK_INITIAL_SIDE
 
     def __init__(self, coord, trail=0):
         self.coord = coord
@@ -36,7 +36,7 @@ class Block:
 
     def paint(self, painter, top_left_corner, spotlight):
         p = top_left_corner + self.coord * Block.side
-        block_center = Point(Block.side/2, Block.side/2)
+        block_center = Point(Block.side / 2, Block.side / 2)
         self.center = p + block_center
         spotlight = top_left_corner + Block.side * spotlight + block_center
         self.glint = 0.15 * spotlight + 0.85 * self.center
@@ -124,7 +124,7 @@ class GhostBlock(Block):
     Mino of the ghost piece
     """
 
-    BORDER_COLOR = consts.GHOST_BLOCK_BORDER_COLOR 
+    BORDER_COLOR = consts.GHOST_BLOCK_BORDER_COLOR
     FILL_COLOR = consts.GHOST_BLOCK_FILL_COLOR
     GLOWING_FILL_COLOR = consts.GHOST_BLOCK_GLOWING_FILL_COLOR
-    GLOWING = consts.GHOST_BLOCK_GLOWING 
+    GLOWING = consts.GHOST_BLOCK_GLOWING
