@@ -10,7 +10,7 @@ from qt5 import QtGui
 PATH = os.path.dirname(os.path.abspath(__file__))
 ICON_PATH = os.path.join(PATH, "icons", "icon.ico")
 BG_IMAGE_DIR = os.path.join(PATH, "backgrounds")
-START_BG_IMAGE_NAME = "00-spacefield_a-000.png"
+START_BG_IMAGE_NAME = "01-spacefield_a-000.png"
 MUSICS_DIR = os.path.join(PATH, "musics")
 SFX_DIR = os.path.join(PATH, "sfx")
 LINE_CLEAR_SFX_PATH = os.path.join(SFX_DIR, "line_clear.wav")
