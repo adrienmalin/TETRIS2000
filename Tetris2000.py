@@ -2,17 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
-"""
-Another TETRIS® clone
-Tetris Game Design by Alexey Pajitnov.
-Parts of comments issued from 2009 Tetris Design Guideline
-"""
-
-
 import sys
-
 from qt5 import QtWidgets
-from window import Window
+from game_gui import Window
 
     
     
