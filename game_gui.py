@@ -1113,11 +1113,12 @@ class SettingsDialog(QtWidgets.QDialog):
 
         layout = QtWidgets.QGridLayout()
 
-        self.groups = {}
-        self.groups[s.KEYBOARD] = SettingsGroup(s.KEYBOARD, self, KeyButton)
-        self.groups[s.DELAYS] = SettingsGroup(s.DELAYS, self, QtWidgets.QSpinBox)
-        self.groups[s.SOUND] = SettingsGroup(s.SOUND, self, QtWidgets.QSlider)
-        self.groups[s.OTHER] = SettingsGroup(s.OTHER, self, QtWidgets.QCheckBox)
+        self.groups = {
+            s.KEYBOARD: SettingsGroup(s.KEYBOARD, self, KeyButton),
+            s.DELAYS: SettingsGroup(s.DELAYS, self, QtWidgets.QSpinBox),
+            s.SOUND: SettingsGroup(s.SOUND, self, QtWidgets.QSlider),
+            s.OTHER: SettingsGroup(s.OTHER, self, QtWidgets.QCheckBox)
+        }
 
         layout.addWidget(self.groups[s.KEYBOARD], 0, 0, 3, 1)
         layout.addWidget(self.groups[s.DELAYS], 0, 1)
