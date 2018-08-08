@@ -837,8 +837,8 @@ class Frames(QtWidgets.QWidget):
         grid.addWidget(
             self.next_piece, y, x, self.next_piece.ROWS + 1, self.next_piece.COLUMNS + 2
         )
-        x, y = 0, self.hold_queue.ROWS + 2
-        grid.addWidget(self.stats, y, x, self.stats.ROWS, self.stats.COLUMNS + 1)
+        x, y = 0, self.hold_queue.ROWS + 1
+        grid.addWidget(self.stats, y + 1, x, self.stats.ROWS, self.stats.COLUMNS + 1)
         x += self.stats.COLUMNS + self.matrix.COLUMNS + 5
         grid.addWidget(
             self.next_queue, y, x, self.next_queue.ROWS, self.next_queue.COLUMNS + 2
