@@ -1,4 +1,4 @@
-#   ![alt text](https://github.com/adrienmalin/Tetris2000/raw/master/icons/48.png "T") etris2000
+#   ![alt text](https://github.com/adrienmalin/Tetris2000/raw/master/icons/48.png "T") ETRIS2000
 
 Another Tetris clone using Qt5 on Python 3.x
 
