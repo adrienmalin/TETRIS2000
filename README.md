@@ -1,5 +1,8 @@
-# Tetris2000
+#   ![alt text](https://github.com/adrienmalin/Tetris2000/raw/master/icons/48.png "T") etris2000
+
 Another Tetris clone using Qt5 on Python 3.x
+
+![alt text](https://github.com/adrienmalin/Tetris2000/raw/master/screenshots/Tetris2000.png "Screenshot")
 
 ### Requirements
 
