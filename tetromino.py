@@ -96,7 +96,7 @@ class Tetromino:
         self.matrix.update()
         return True
 
-    def move(self, horizontally, vertically, trail=False):
+    def move(self, horizontally, vertically, trail=0):
         """
         Try to translate self horizontally or vertically
         The Tetrimino in play falls from just above the Skyline one cell at a time,
