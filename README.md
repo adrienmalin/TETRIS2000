@@ -1,14 +1,14 @@
-#   ![alt text](https://github.com/adrienmalin/Tetris2000/raw/master/icons/48.png "T") etris2000
+#   ![T](https://github.com/adrienmalin/Tetris2000/raw/master/icons/48.png "T") ETRIS2000
 
 Another Tetris clone using Qt5 on Python 3.x
 
-![alt text](https://github.com/adrienmalin/Tetris2000/raw/master/screenshots/Tetris2000.png "Screenshot")
+![Screenshot](https://github.com/adrienmalin/Tetris2000/raw/master/screenshots/Tetris2000.png "Screenshot")
 
 ### Requirements
 
 * Python 3.x
 * A Qt5 library (PyQt5 or PySide)
-* Optionnal: [qdarkstyle](https://github.com/ColinDuquesnoy/QDarkStyleSheet) stylesheet
+* Optionnal: [QDarkStylesheet](https://github.com/ColinDuquesnoy/QDarkStyleSheet)
 
 As for now, qdarkstyle doesn't support PySide2 so PyQt5 is recommanded
 
@@ -35,7 +35,7 @@ Extract the archive and launch Tetris2000
 
       pip3 install --user PySide2
     
-* Install qdarkstyle:
+* Install QDarkStylesheet:
 
       pip3 install --user qdarkstyle
 
