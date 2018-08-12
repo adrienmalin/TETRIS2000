@@ -21,9 +21,8 @@ import consts
 from consts import L, R, CLOCKWISE, COUNTERCLOCKWISE
 from qt5 import QtWidgets, QtCore, QtGui, QtMultimedia
 from __version__ import __title__, __author__, __version__
-from block import Block
 from point import Point
-from tetromino import Tetromino, GhostPiece
+from tetromino import Block, Tetromino, GhostPiece
 
 
 class Grid(QtWidgets.QWidget):
@@ -113,6 +112,7 @@ class Matrix(Grid):
 
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
+        self.auto_repeat_delay = 0
         self.auto_repeat_timer = QtCore.QTimer()
         self.auto_repeat_timer.setTimerType(QtCore.Qt.PreciseTimer)
         self.auto_repeat_timer.timeout.connect(self.auto_repeat)
@@ -175,8 +175,8 @@ class Matrix(Grid):
         self.do(action)
         if action in (s.MOVE_LEFT, s.MOVE_RIGHT, s.SOFT_DROP):
             if action not in self.actions_to_repeat:
-                self.actions_to_repeat.append(action)
                 self.auto_repeat_wait()
+                self.actions_to_repeat.append(action)
 
     def keyReleaseEvent(self, event):
         if event.isAutoRepeat():
@@ -339,6 +339,7 @@ class Matrix(Grid):
             if mino.coord.y() >= 0:
                 self.cells[mino.coord.y()][mino.coord.x()] = mino
             mino.shine(glowing=2, delay=consts.ANIMATION_DELAY)
+            QtCore.QTimer.singleShot(consts.ANIMATION_DELAY, self.update)
         self.update()
 
         if all(
