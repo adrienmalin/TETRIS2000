@@ -113,8 +113,8 @@ class Matrix(Grid):
 
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
-        self.auto_repeat_delay = 0
         self.auto_repeat_timer = QtCore.QTimer()
+        self.auto_repeat_timer.setTimerType(QtCore.Qt.PreciseTimer)
         self.auto_repeat_timer.timeout.connect(self.auto_repeat)
         self.fall_timer = QtCore.QTimer()
         self.fall_timer.timeout.connect(self.fall)

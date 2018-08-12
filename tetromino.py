@@ -125,7 +125,7 @@ class Tetromino:
         There is no Auto-Repeat for rotation itself.
         """
         rotated_coords = tuple(
-            block.coord.rotate(self.minoes[0].coord, direction) for block in self.minoes
+            mino.coord.rotate(self.minoes[0].coord, direction) for mino in self.minoes
         )
 
         for movement in self.SUPER_ROTATION_SYSTEM[self.orientation][direction]:
