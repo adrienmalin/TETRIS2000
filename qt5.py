@@ -26,3 +26,36 @@ except ImportError as pyqt5_error:
 else:
     os.environ["QT_API"] = "pyqt5"
     QtCore.Signal = QtCore.pyqtSignal
+
+
+def propertize(class_):
+    class_dict = class_.__dict__.copy()
+    for name, attr in class_dict.items():
+        if isinstance(attr, type):
+            propertize(attr)
+        else:
+            try:
+                setattr(class_, "get" + name.capitalize(), copy(attr))
+                setattr(
+                    class_,
+                    name,
+                    property(
+                        getattr(class_, "get" + name.capitalize()),
+                        getattr(class_, "set" + name.capitalize())
+                    )
+                )
+                print(getattr(class_, "get" + name.capitalize()))
+            except AttributeError:
+                pass
+
+
+"""for module in QtWidgets, QtCore, QtGui, QtMultimedia:
+    for class_ in module.__dict__.values():
+        if isinstance(class_, type):
+            propertize(class_)"""
+            
+propertize(QtCore.QPoint)
+
+if __name__ == "__main__":
+    p=QtCore.QPoint(1,1)
+    print(p.x)
