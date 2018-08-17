@@ -28,34 +28,50 @@ else:
     QtCore.Signal = QtCore.pyqtSignal
 
 
-def propertize(class_):
-    class_dict = class_.__dict__.copy()
-    for name, attr in class_dict.items():
-        if isinstance(attr, type):
-            propertize(attr)
-        else:
-            try:
-                setattr(class_, "get" + name.capitalize(), copy(attr))
-                setattr(
-                    class_,
-                    name,
-                    property(
-                        getattr(class_, "get" + name.capitalize()),
-                        getattr(class_, "set" + name.capitalize())
+class Propertize(type):
+    def __new__(cls, name, bases, dct):
+        return type.__new__(
+            cls,
+            name[1:],
+            tuple(Propertize.this_class(base) for base in bases),
+            {
+                attr_name: (
+                    property(attr, dct["set" + attr_name.capitalize()])
+                    if "set" + attr_name.capitalize() in dct
+                    else (
+                        Propertize.this_class(attr)
+                        if isinstance(attr, type)
+                        else attr
                     )
-                )
-                print(getattr(class_, "get" + name.capitalize()))
-            except AttributeError:
-                pass
-
-
-"""for module in QtWidgets, QtCore, QtGui, QtMultimedia:
-    for class_ in module.__dict__.values():
-        if isinstance(class_, type):
-            propertize(class_)"""
-            
-propertize(QtCore.QPoint)
+                ) for attr_name, attr in dct.items()
+            }
+        )
+    
+    @staticmethod
+    def this_class(cls):
+        return Propertize(cls.__name__, cls.__bases__, cls.__dict__)
+    
 
 if __name__ == "__main__":
-    p=QtCore.QPoint(1,1)
-    print(p.x)
+    class QParent:
+        def __init__(self):
+            self._b = 0
+        def b(self):
+            return self._b
+        def setB(self, val):
+            self._b = val
+        
+    
+    class QTest(QParent, metaclass=Propertize):
+        def __init__(self):
+            super().__init__()
+            self._a = 0
+        def a(self):
+            return self._a
+        def setA(self, val):
+            self._a = val
+    
+    
+    Point = Propertize.this_class(QtCore.QPoint)()
+    p = Point(1, 2)
+    print(p.x, p.y)
