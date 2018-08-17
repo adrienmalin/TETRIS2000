@@ -10,6 +10,9 @@ class Point(QtCore.QPoint):
     """
     Point of coordinates (x, y)
     """
+    
+    x = property(QtCore.QPoint.x, QtCore.QPoint.setX)
+    y = property(QtCore.QPoint.y, QtCore.QPoint.setY)
 
     def rotate(self, center, direction=CLOCKWISE):
         """ Returns the Point image of the rotation of self
@@ -18,21 +21,21 @@ class Point(QtCore.QPoint):
             return self
 
         p = self - center
-        p = Point(-direction * p.y(), direction * p.x())
+        p = Point(-direction * p.y, direction * p.x)
         p += center
         return p
 
     def __add__(self, o):
-        return Point(self.x() + o.x(), self.y() + o.y())
+        return Point(self.x + o.x, self.y + o.y)
 
     def __sub__(self, o):
-        return Point(self.x() - o.x(), self.y() - o.y())
+        return Point(self.x - o.x, self.y - o.y)
 
     def __mul__(self, k):
-        return Point(k * self.x(), k * self.y())
+        return Point(k * self.x, k * self.y)
 
     def __truediv__(self, k):
-        return Point(self.x() / k, self.y() / k)
+        return Point(self.x / k, self.y / k)
 
     __radd__ = __add__
     __rsub__ = __sub__
@@ -40,6 +43,6 @@ class Point(QtCore.QPoint):
     __rtruediv__ = __truediv__
 
     def __repr__(self):
-        return "Point({}, {})".format(self.x(), self.y())
+        return "Point({}, {})".format(self.x, self.y)
 
     __str__ = __repr__

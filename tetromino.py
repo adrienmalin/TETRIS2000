@@ -54,8 +54,8 @@ class Block:
             painter.setBrush(fill)
             painter.setPen(QtCore.Qt.NoPen)
             painter.drawRoundedRect(
-                start.x(),
-                start.y(),
+                start.x,
+                start.y,
                 Block.side,
                 Block.side * (1 + self.trail),
                 20,
@@ -71,8 +71,8 @@ class Block:
             painter.setBrush(QtGui.QBrush(fill))
             painter.setPen(QtCore.Qt.NoPen)
             painter.drawEllipse(
-                self.center.x() - self.glowing * Block.side,
-                self.center.y() - self.glowing * Block.side,
+                self.center.x - self.glowing * Block.side,
+                self.center.y - self.glowing * Block.side,
                 2 * self.glowing * Block.side,
                 2 * self.glowing * Block.side,
             )
@@ -80,8 +80,8 @@ class Block:
         painter.setBrush(self.brush())
         painter.setPen(self.pen())
         painter.drawRoundedRect(
-            p.x() + 1,
-            p.y() + 1,
+            p.x + 1,
+            p.y + 1,
             Block.side - 2,
             Block.side - 2,
             20,
@@ -417,6 +417,6 @@ class GhostPiece(Tetromino):
     def __init__(self, piece):
         self.matrix = piece.matrix
         self.minoes = tuple(
-            GhostBlock(Point(mino.coord.x(), mino.coord.y())) for mino in piece.minoes
+            GhostBlock(Point(mino.coord.x, mino.coord.y)) for mino in piece.minoes
         )
         self.hard_drop(show_trail=False, update=False)

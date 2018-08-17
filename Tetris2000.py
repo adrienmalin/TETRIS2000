@@ -95,7 +95,7 @@ class Matrix(Grid):
 
     ROWS = consts.MATRIX_ROWS + consts.GRID_INVISIBLE_ROWS
     COLUMNS = consts.MATRIX_COLUMNS
-    STARTING_POSITION = Point(COLUMNS // 2, consts.GRID_INVISIBLE_ROWS - 1)
+    STARTING_POSITION = Point(COLUMNS // 2 - 1, consts.GRID_INVISIBLE_ROWS - 1)
     TEXT_COLOR = consts.MATRIX_TEXT_COLOR
 
     drop_signal = QtCore.Signal(int)
@@ -153,7 +153,7 @@ class Matrix(Grid):
         return [None for x in range(self.COLUMNS)]
 
     def is_empty_cell(self, coord):
-        x, y = coord.x(), coord.y()
+        x, y = coord.x, coord.y
         return (
             0 <= x < self.COLUMNS
             and y < self.ROWS
@@ -336,14 +336,14 @@ class Matrix(Grid):
 
         #  Enter minoes into the matrix
         for mino in self.piece.minoes:
-            if mino.coord.y() >= 0:
-                self.cells[mino.coord.y()][mino.coord.x()] = mino
+            if mino.coord.y >= 0:
+                self.cells[mino.coord.y][mino.coord.x] = mino
             mino.shine(glowing=2, delay=consts.ANIMATION_DELAY)
             QtCore.QTimer.singleShot(consts.ANIMATION_DELAY, self.update)
         self.update()
 
         if all(
-            mino.coord.y() < consts.GRID_INVISIBLE_ROWS for mino in self.piece.minoes
+            mino.coord.y < consts.GRID_INVISIBLE_ROWS for mino in self.piece.minoes
         ):
             self.frames.game_over()
             return
