@@ -6,7 +6,7 @@ Another Tetris clone using Qt5 on Python 3.x
 
 ## Installation
 
-* [Download archive](https://github.com/adrienmalin/Tetris2000/archive/master.zip) (46 Mo)
+* [Download archive](https://github.com/adrienmalin/Tetris2000/archive/master.zip) (113 Mo)
 * Extract the archive and launch Tetris2000
 
 ## Credits
