@@ -7,7 +7,7 @@ from qt5 import QtCore
 from propertize import propertize, rename_attributes, snake_case
 
 
-@propertize("", "set")
+@propertize("", "set_")
 @rename_attributes(snake_case)
 class Point(QtCore.QPoint):
     """

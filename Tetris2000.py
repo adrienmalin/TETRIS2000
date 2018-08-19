@@ -147,7 +147,7 @@ class Matrix(Grid):
         self.speed = consts.INITIAL_SPEED * (0.8 - ((level - 1) * 0.007)) ** (level - 1)
         self.fall_timer.start(self.speed)
         if level > 15:
-            self.lock_delay *= 0.9
+            self.lock_delay *= consts.AFTER_LVL_15_ACCELERATION
 
     def empty_row(self):
         return [None for x in range(self.COLUMNS)]
