@@ -4,46 +4,12 @@ Another Tetris clone using Qt5 on Python 3.x
 
 ![Screenshot](https://github.com/adrienmalin/Tetris2000/raw/master/screenshots/Tetris2000.png "Screenshot")
 
-### Requirements
+## Installation
 
-* Python 3.x
-* A Qt5 library (PyQt5 or PySide)
-* Optionnal: [QDarkStylesheet](https://github.com/ColinDuquesnoy/QDarkStyleSheet)
+* [Download archive](https://github.com/adrienmalin/Tetris2000/archive/master.zip) (46 Mo)
+* Extract the archive and launch Tetris2000
 
-As for now, qdarkstyle doesn't support PySide2 so PyQt5 is recommanded
-
-### Installation
-
-#### Download ready-to-use archive
-
-No need to install requirements
-
-* Windows (x64): [Download self-extracting archive](https://github.com/adrienmalin/Tetris2000/raw/master/dist/Tetris2000.exe) (46 Mo)
-* Linux: [Download TAR.GZ archive](https://github.com/adrienmalin/Tetris2000/raw/master/dist/Tetris2000.tar.gz) (77 Mo)
-
-Extract the archive and launch Tetris2000
-
-#### From [GitHub](https://github.com)
-
-* Install [Python 3.x](https://www.python.org/downloads/)
-
-* From a terminal, install PyQt5:
-
-      pip3 install --user PyQt5
-    
-    or PySide2:
-
-      pip3 install --user PySide2
-    
-* Install QDarkStylesheet:
-
-      pip3 install --user qdarkstyle
-
-* Download the [archive from GitHub](https://github.com/adrienmalin/Tetris2000)
-* Unzip the archive
-* Launch Tetris2000.py
-
-### Credits
+## Credits
 
 * [Tetris](https://tetris.com) Game Design by Alekseï Pajitnov
 * Graphism inspired by [Tetris Effect](https://www.tetriseffect.game)
@@ -59,5 +25,7 @@ Extract the archive and launch Tetris2000
 * Musics from [Overclocked Remix](https://ocremix.org/game/510/tetris-gb) by:<br>
   CheDDer Nardz, djpretzel, MkVaff, Sir_NutS, R3FORGED, Sir_NutS
 * Sound effects made with [voc-one by Simple-Media](http://www.simple-media.co.uk/vsti.htm)
+
+## Thanks
 
 Thanks to my pythonista friends [krakozaure](https://github.com/krakozaure) and ABR
