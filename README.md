@@ -14,7 +14,7 @@ As for now, qdarkstyle doesn't support PySide2 so PyQt5 is recommanded
 
 ### Installation
 
-#### Download ready to use archive
+#### Download ready-to-use archive
 
 No need to install requirements
 
