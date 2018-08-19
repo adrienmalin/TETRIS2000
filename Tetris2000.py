@@ -147,7 +147,7 @@ class Matrix(Grid):
         self.speed = consts.INITIAL_SPEED * (0.8 - ((level - 1) * 0.007)) ** (level - 1)
         self.fall_timer.start(self.speed)
         if level > 15:
-            self.lock_delay *= consts.AFTER_LVL_15_ACCELERATION
+            self.lock_delay = consts.LOCK_DELAY * (consts.AFTER_LVL_15_ACCELERATION ** (level-15))
 
     def empty_row(self):
         return [None for x in range(self.COLUMNS)]
@@ -1077,6 +1077,10 @@ class Frames(QtWidgets.QWidget):
                 )
             )
         msgbox.setDetailedText(self.stats.text(full_stats=True))
+        # Find and set default the "show details" button
+        for button in msgbox.buttons():
+            if msgbox.buttonRole(button) == QtWidgets.QMessageBox.ActionRole:
+                msgbox.setDefaultButton(button)
         msgbox.exec_()
 
 
