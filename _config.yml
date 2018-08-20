@@ -7,3 +7,5 @@ url: https://adrienmalin.github.io
 author: Adrien Malin
 logo: https://raw.githubusercontent.com/adrienmalin/Tetris2000/master/icons/48.png
 github_username: adrienmalin
+
+theme: jekyll-theme-midnight
