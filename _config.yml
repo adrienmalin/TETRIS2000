@@ -1,6 +1,5 @@
 remote_theme: "mmistakes/jekyll-theme-basically-basic"
 lang: en
-title: TETRIS 2000
 description: Another Tetris clone
 url: https://github.com/adrienmalin/TETRIS2000
 author: Adrien Malingre
