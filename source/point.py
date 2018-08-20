@@ -4,15 +4,15 @@
 
 from .consts import CLOCKWISE
 from .qt5 import QtCore
-from .propertize import propertize, rename_attributes, snake_case
 
 
-@propertize("", "set_")
-@rename_attributes(snake_case)
 class Point(QtCore.QPoint):
     """
     Point of coordinates (x, y)
     """
+    
+    x = property(QtCore.QPoint.x, QtCore.QPoint.setX)
+    y = property(QtCore.QPoint.y, QtCore.QPoint.setY)
     
     def rotate(self, center, direction=CLOCKWISE):
         """ Returns the Point image of the rotation of self
