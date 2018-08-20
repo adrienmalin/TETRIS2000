@@ -1,2 +1,2 @@
-theme: jekyll-theme-midnight
+remote_theme: "mmistakes/jekyll-theme-basically-basic"
 show_downloads: true
