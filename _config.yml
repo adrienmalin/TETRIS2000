@@ -54,3 +54,5 @@ kramdown:
   hard_wrap: true
 
 exclude: ['LICENSE']
+
+theme: jekyll-theme-midnight
