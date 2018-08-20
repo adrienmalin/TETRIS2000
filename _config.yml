@@ -6,7 +6,7 @@ name: TETRIS 2000
 description: Another Tetris clone
 
 # Url is currently only used only for the RSS feed in feed.xml
-url: https://adrienmalin.github.io/TETRIS2000/
+url: https://adrienmalin.github.io
 
 # For a project page here should be a project name. Otherwise (for user's/organization's page leave it empty)
 baseurl: '/TETRIS2000'
