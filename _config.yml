@@ -1,7 +1,9 @@
 remote_theme: "mmistakes/jekyll-theme-basically-basic"
+minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 lang: en
+title: TETRIS 2000
 description: Another Tetris clone
-url: https://github.com/adrienmalin/TETRIS2000
-author: Adrien Malingre
+url: https://github.com/adrienmalin
+author: Adrien Malin
 logo: https://raw.githubusercontent.com/adrienmalin/Tetris2000/master/icons/48.png
 github_username: adrienmalin
