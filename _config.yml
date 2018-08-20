@@ -1,7 +1,5 @@
+theme: jekyll-theme-midnight
+remote-theme: streetturtle/jekyll-clean-dark
 title: TETRIS 2000
 logo: https://raw.githubusercontent.com/adrienmalin/Tetris2000/master/icons/48.png
 show_downloads: true
-
-remote-theme: streetturtle/jekyll-clean-dark
-
-theme: jekyll-theme-midnight
