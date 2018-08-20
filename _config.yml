@@ -1,4 +1,7 @@
-title: TETRIS 2000
+remote_theme: "mmistakes/jekyll-theme-basically-basic"
+lang: en
+description: Another Tetris clone
+url: https://github.com/adrienmalin/TETRIS2000
+author: Adrien Malingre
 logo: https://raw.githubusercontent.com/adrienmalin/Tetris2000/master/icons/48.png
-remote_theme: streetturtle/jekyll-clean-dark
-show_downloads: true
+github_username: adrienmalin
