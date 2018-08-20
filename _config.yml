@@ -3,3 +3,5 @@ logo: https://raw.githubusercontent.com/adrienmalin/Tetris2000/master/icons/48.p
 show_downloads: true
 
 remote-theme: streetturtle/jekyll-clean-dark
+
+theme: jekyll-theme-midnight
