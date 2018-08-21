@@ -14,10 +14,10 @@ Yet another Tetris clone, with Qt5 on Python 3
 
 * Install [Python 3](https://www.python.org) with pip
 
-* Install PyQt5 or PySide2, qdarkstyle, and nuitka: (Nota: qdarkstyle don't support PySide2 yet)
+* Install qtpy, qdarkstyle, and nuitka: (Nota: qdarkstyle don't support PySide2 yet)
 
     ```bash
-    pip3 install --user PyQt5
+    pip3 install --user qtpy
     pip3 install --user qdarkstyle
     pip3 install --user nuitka
     ```
