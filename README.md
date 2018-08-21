@@ -10,6 +10,26 @@ Yet another Tetris clone, with Qt5 on Python 3
 * Extract the archive
 * Launch Tetris2000
 
+## Build
+
+* Install [Python 3](https://www.python.org) with pip
+
+* Install PyQt5 or PySide2, qdarkstyle, and nuitka: (Nota: qdarkstyle don't support PySIde2 yet)
+
+    pip3 install --user PyQt5
+    pip3 install --user qdarkstyle
+    pip3 install --user nuitka
+  
+* Clone repository:
+
+    mkdir TETRIS2000
+    cd TETRIS2000
+    git clone https://github.com/adrienmalin/Tetris2000
+    
+* Build:
+
+    python3 -m nuitka  Tetris2000.py --recurse-all
+
 ## Credits
 
 * [Tetris](https://tetris.com) Game Design by Alekseï Pajitnov
