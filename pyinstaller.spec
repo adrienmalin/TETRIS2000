@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['Tetris2000.py'],
+a = Analysis(['TETRIS2000.py'],
              pathex=[],
              binaries=[],
              datas=[
@@ -28,7 +28,7 @@ pyz = PYZ(a.pure, a.zipped_data,
 exe = EXE(pyz,
           a.scripts,
           exclude_binaries=True,
-          name='Tetris2000',
+          name='TETRIS2000',
           debug=False,
           strip=False,
           upx=False,
@@ -40,4 +40,4 @@ coll = COLLECT(exe,
                a.datas,
                strip=False,
                upx=False,
-               name='Tetris2000')
+               name='TETRIS2000')
