@@ -1,6 +1,6 @@
 #   ![T](https://github.com/adrienmalin/Tetris2000/raw/master/icons/48.png "T") TETRIS 2000
 
-Another Tetris clone using Qt5 on Python 3.x
+Yet another Tetris clone, with Qt5 on Python 3
 
 ![Screenshot](https://github.com/adrienmalin/Tetris2000/raw/master/screenshots/Tetris2000.png "Screenshot")
 
