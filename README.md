@@ -2,7 +2,7 @@
 
 Yet another Tetris clone, with Qt5 on Python 3
 
-![Screenshot](https://github.com/adrienmalin/Tetris2000/raw/master/screenshots/Tetris2000.png "Screenshot")
+![Screenshot](https://github.com/adrienmalin/Tetris2000/raw/gh-pages/screenshots/Tetris2000.png "Screenshot")
 
 ## Installation
 
