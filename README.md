@@ -14,7 +14,7 @@ Yet another Tetris clone, with Qt5 on Python 3
 
 * Install [Python 3](https://www.python.org) with pip
 
-* Install PyQt5 or PySide2, qdarkstyle, and nuitka: (Nota: qdarkstyle don't support PySIde2 yet)
+* Install PyQt5 or PySide2, qdarkstyle, and nuitka: (Nota: qdarkstyle don't support PySide2 yet)
 
     ```bash
     pip3 install --user PyQt5
@@ -33,7 +33,7 @@ Yet another Tetris clone, with Qt5 on Python 3
     ```bash
     python3 -m nuitka  Tetris2000.py --recurse-all
     ```
-* On Windows, add icons/icon.ico toTetris2000.exe with [Resource hacker](http://www.angusj.com/resourcehacker/)
+* On Windows, add `icons/icon.ico` to `Tetris2000.exe` with [Resource hacker](http://www.angusj.com/resourcehacker/)
 
 ## Credits
 
