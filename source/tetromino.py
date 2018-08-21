@@ -344,14 +344,9 @@ class TetroT(Tetromino, metaclass=MetaTetro):
             c = not self.matrix.is_empty_cell(pc)
             d = not self.matrix.is_empty_cell(pd)
 
-            if (a and b) and (c or d):
-                if c:
-                    pe = (pa + pc) / 2
-                elif d:
-                    pe = (pb + pd) / 2
-                if not self.matrix.is_empty_cell(pe):
-                    self.t_spin = "T-Spin"
-            elif (a or b) and (c and d):
+            if a and b and (c or d):
+                self.t_spin = "T-Spin"
+            elif c and d and (a or b):
                 self.t_spin = "Mini T-Spin"
         return rotated
 
