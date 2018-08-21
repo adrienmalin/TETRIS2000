@@ -33,6 +33,7 @@ Yet another Tetris clone, with Qt5 on Python 3
     ```bash
     python3 -m nuitka  Tetris2000.py --recurse-all
     ```
+* On Windows, add icons/icon.ico toTetris2000.exe with [Resource hacker](http://www.angusj.com/resourcehacker/)
 
 ## Credits
 
