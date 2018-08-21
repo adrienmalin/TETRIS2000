@@ -28,10 +28,10 @@ Yet another Tetris clone, with Qt5 on Python 3
     git clone https://github.com/adrienmalin/Tetris2000
     ```
     
-* Build:
+* Build with nuitka:
 
     ```bash
-    python3 -m nuitka  Tetris2000.py --recurse-all
+    python3 -m nuitka Tetris2000.py --recurse-all
     ```
 * On Windows, add `icons/icon.ico` to `Tetris2000.exe` with [Resource hacker](http://www.angusj.com/resourcehacker/)
 
