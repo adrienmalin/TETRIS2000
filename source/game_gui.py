@@ -7,10 +7,10 @@ import itertools
 import locale
 import os
 import time
+from qtpy import QtWidgets, QtCore, QtGui, QtMultimedia
 
 from . import consts
 from .consts import L, R, CLOCKWISE, COUNTERCLOCKWISE
-from .qt5 import QtWidgets, QtCore, QtGui, QtMultimedia
 from .__version__ import __title__, __author__, __version__
 from .point import Point
 from .tetromino import Block, Tetromino, GhostPiece

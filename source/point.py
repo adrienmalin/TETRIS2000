@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
+from qtpy import QtCore
+
 from .consts import CLOCKWISE
-from .qt5 import QtCore
 
 
 class Point(QtCore.QPoint):

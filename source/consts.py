@@ -3,7 +3,7 @@
 
 
 import os
-from .qt5 import QtGui
+from qtpy import QtGui
 
 
 # Paths

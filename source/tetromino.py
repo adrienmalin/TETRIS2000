@@ -3,11 +3,11 @@
 
 
 import random
+from qtpy import QtCore, QtGui
 
 from . import consts
 from .consts import L, R, U, D, CLOCKWISE, COUNTERCLOCKWISE
 from .point import Point
-from .qt5 import QtCore, QtGui
 
 
 class Block:

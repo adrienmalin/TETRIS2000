@@ -10,8 +10,8 @@ Parts of comments issued from 2009 Tetris Design Guideline
 
 
 import sys
+from qtpy import QtWidgets
 
-from source.qt5 import QtWidgets
 from source.game_gui import Window
 
 
