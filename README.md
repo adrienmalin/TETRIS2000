@@ -19,7 +19,7 @@ Yet another Tetris clone, with Qt5 on Python 3
     ```bash
     pip3 install --user qtpy
     pip3 install --user qdarkstyle
-    pip3 install --user nuitka
+    pip3 install --user pyinstaller
     ```
   
 * Clone repository:
@@ -28,21 +28,11 @@ Yet another Tetris clone, with Qt5 on Python 3
     git clone https://github.com/adrienmalin/Tetris2000
     ```
     
-* Build with nuitka:
-
-Linux:
+* Build with pyinstaller:
 
     ```bash
-    python3 -m nuitka Tetris2000.py --recurse-all
+    pyinstaller pyinstaller.spec
     ```
-    
-Windows:
-
-    ```bash
-    python -m nuitka Tetris2000 --recurse-all --windows-disable-console
-    ```
-
-Add `icons/icon.ico` to `Tetris2000.exe` with [Resource hacker](http://www.angusj.com/resourcehacker/)
 
 ## Credits
 

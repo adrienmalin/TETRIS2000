@@ -18,6 +18,7 @@ lib64/
 parts/
 sdist/
 Tetris2000.build/
+Tetris2000.build/
 var/
 wheels/
 *.egg-info/
