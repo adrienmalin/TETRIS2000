@@ -25,8 +25,6 @@ Yet another Tetris clone, with Qt5 on Python 3
 * Clone repository:
 
     ```bash
-    mkdir TETRIS2000
-    cd TETRIS2000
     git clone https://github.com/adrienmalin/Tetris2000
     ```
     
