@@ -1,12 +1,12 @@
-#   ![T](https://github.com/adrienmalin/Tetris2000/raw/master/icons/48.png "T") TETRIS 2000
+#   ![T](../raw/master/icons/48.png "T") TETRIS 2000
 
 Yet another Tetris clone, with Qt5 on Python 3
 
-![Screenshot](https://github.com/adrienmalin/Tetris2000/raw/gh-pages/screenshots/Tetris2000.png "Screenshot")
+![Screenshot](../raw/gh-pages/screenshots/Tetris2000.png "Screenshot")
 
 ## Installation
 
-* [Download archive](https://github.com/adrienmalin/Tetris2000/archive/master.zip) (34 Mo)
+* [Download archive](../archive/master.zip) (34 Mo)
 * Extract the archive
 * Launch Tetris2000
 
@@ -16,19 +16,25 @@ Yet another Tetris clone, with Qt5 on Python 3
 
 * Install PyQt5 or PySide2, qdarkstyle, and nuitka: (Nota: qdarkstyle don't support PySIde2 yet)
 
+    ```bash
     pip3 install --user PyQt5
     pip3 install --user qdarkstyle
     pip3 install --user nuitka
+    ```
   
 * Clone repository:
 
+    ```bash
     mkdir TETRIS2000
     cd TETRIS2000
     git clone https://github.com/adrienmalin/Tetris2000
+    ```
     
 * Build:
 
+    ```bash
     python3 -m nuitka  Tetris2000.py --recurse-all
+    ```
 
 ## Credits
 
