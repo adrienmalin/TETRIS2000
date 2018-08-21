@@ -31,7 +31,7 @@ Yet another Tetris clone, with Qt5 on Python 3
 * Build with pyinstaller:
 
     ```bash
-    python3 -m pyinstaller TETRIS2000.spec
+    pyinstaller TETRIS2000.spec
     ```
 
 ## Credits
