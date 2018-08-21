@@ -1,12 +1,12 @@
-#   ![T](../raw/master/icons/48.png "T") TETRIS 2000
+#   ![alt text](https://github.com/adrienmalin/TETRIS2000/raw/master/icons/48.png "T") TETRIS 2000
 
 Yet another Tetris clone, with Qt5 on Python 3
 
-![Screenshot](../raw/gh-pages/screenshots/Tetris2000.png "Screenshot")
+![alt text](https://github.com/adrienmalin/TETRIS2000/raw/gh-pages/screenshots/Tetris2000.png "Screenshot")
 
 ## Installation
 
-* [Download archive](../archive/master.zip) (34 Mo)
+* [Download archive](https://github.com/adrienmalin/TETRIS2000/archive/master.zip) (34 Mo)
 * Extract the archive
 * Launch Tetris2000
 
