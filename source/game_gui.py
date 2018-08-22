@@ -636,9 +636,9 @@ class Stats(QtWidgets.QWidget):
             self.temporary_text.emit(text + "\n{:n}".format(score))
 
         # ==============================================================================
-        #         Combo
-        #         Bonus for complete lines on each consecutive lock downs
-        #         if nb_complete_lines:
+        # Combo
+        # Bonus for complete lines on each consecutive lock downs
+        # if nb_complete_lines:
         # ==============================================================================
         if nb_complete_lines:
             self.combo += 1
@@ -650,18 +650,23 @@ class Stats(QtWidgets.QWidget):
                 self.score_total += combo_score
                 self.max_combo = max(self.max_combo, self.combo)
                 self.combos_total += 1
-                self.temporary_text.emit(
-                    self.tr("COMBO x{:n}\n{:n}").format(self.combo, combo_score)
-                )
+                if self.combo == 1:
+                    self.temporary_text.emit(
+                        self.tr("COMBO\n{:n}").format(combo_score)
+                    )
+                else:
+                    self.temporary_text.emit(
+                        self.tr("COMBO x{:n}\n{:n}").format(self.combo, combo_score)
+                    )
         else:
             self.combo = -1
 
         # ==============================================================================
-        #         Back-to_back sequence
-        #         Two major bonus actions, such as two Tetrises, performed without
-        #         a Single, Double, or Triple Line Clear occurring between them.
-        #         Bonus for Tetrises, T-Spin Line Clears, and Mini T-Spin Line Clears
-        #         performed consecutively in a B2B sequence.
+        # Back-to_back sequence
+        # Two major bonus actions, such as two Tetrises, performed without
+        # a Single, Double, or Triple Line Clear occurring between them.
+        # Bonus for Tetrises, T-Spin Line Clears, and Mini T-Spin Line Clears
+        # performed consecutively in a B2B sequence.
         # ==============================================================================
         if (t_spin and nb_complete_lines) or nb_complete_lines == 4:
             if self.back_to_back_scores is not None:
