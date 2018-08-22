@@ -846,10 +846,11 @@ class Frames(QtWidgets.QWidget):
         self.matrix.drop_signal.connect(self.stats.update_drop_score)
         self.matrix.lock_signal.connect(self.stats.update_score)
 
-        self.set_background(
-            os.path.join(consts.BG_IMAGE_DIR, consts.START_BG_IMAGE_NAME)
+        self.bg_image = QtGui.QImage(
+                os.path.join(consts.BG_IMAGE_DIR, consts.START_BG_IMAGE_NAME)
         )
-
+        self.resize_bg_image()
+        
         self.apply_settings()
 
     def load_music(self):
@@ -895,15 +896,11 @@ class Frames(QtWidgets.QWidget):
         self.resize_bg_image()
 
     def reset_backgrounds(self):
-        backgrounds_paths = (
-            os.path.join(consts.BG_IMAGE_DIR, entry.name)
+        backgrounds = tuple(
+            QtGui.QImage((os.path.join(consts.BG_IMAGE_DIR, entry.name)))
             for entry in os.scandir(consts.BG_IMAGE_DIR)
         )
-        self.backgrounds_cycle = itertools.cycle(backgrounds_paths)
-
-    def set_background(self, path):
-        self.bg_image = QtGui.QImage(path)
-        self.resize_bg_image()
+        self.backgrounds_cycle = itertools.cycle(backgrounds)
 
     def resize_bg_image(self):
         self.resized_bg_image = QtGui.QPixmap.fromImage(self.bg_image)
@@ -965,7 +962,8 @@ class Frames(QtWidgets.QWidget):
         self.new_piece()
 
     def new_level(self):
-        self.set_background(next(self.backgrounds_cycle))
+        self.bg_image = QtGui.QImage(next(self.backgrounds_cycle))
+        self.resize_bg_image()
         level = self.stats.new_level()
         self.matrix.new_level(level)
 
