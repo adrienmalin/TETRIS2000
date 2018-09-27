@@ -5,8 +5,9 @@ Yet another Tetris clone, with Qt5 on Python 3
 ![alt text](https://github.com/adrienmalin/TETRIS2000/raw/gh-pages/screenshots/Tetris2000.png "Screenshot")
 
 ## Installation
-
-* [Download archive](https://github.com/adrienmalin/TETRIS2000/archive/master.zip) (34 Mo)
+* Download:
+  * [Linux](https://github.com/adrienmalin/TETRIS2000/releases/download/V0.3.1/TETRIS2000.tar.gz) (78.3 MB)
+  * [Windows](https://github.com/adrienmalin/TETRIS2000/releases/download/V0.3.1/TETRIS2000.zip) (51.7 MB)
 * Extract the archive
 * Launch Tetris2000
 
