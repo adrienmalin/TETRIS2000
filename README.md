@@ -1,8 +1,8 @@
-#   ![alt text](https://github.com/adrienmalin/TETRIS2000/raw/master/icons/48.png "T") TETRIS 2000
+#   ![icon](https://raw.githubusercontent.com/adrienmalin/TETRIS2000/master/src/main/icons/linux/48.png "T") TETRIS 2000
 
 Yet another Tetris clone, with Qt5 on Python 3
 
-![alt text](https://github.com/adrienmalin/TETRIS2000/raw/gh-pages/screenshots/Tetris2000.png "Screenshot")
+![screenshot](https://raw.githubusercontent.com/adrienmalin/TETRIS2000/gh-pages/screenshots/Tetris2000.png "Screenshot")
 
 ## Installation
 * Download:
