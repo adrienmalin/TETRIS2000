@@ -4,37 +4,44 @@ Yet another Tetris clone, with Qt5 on Python 3
 
 ![screenshot](https://raw.githubusercontent.com/adrienmalin/TETRIS2000/gh-pages/screenshots/Tetris2000.png "Screenshot")
 
-## Installation
-* Download:
-  * [Linux](https://github.com/adrienmalin/TETRIS2000/releases/download/V0.3.1/TETRIS2000.tar.gz) (78.3 MB)
-  * [Windows](https://github.com/adrienmalin/TETRIS2000/releases/download/V0.3.1/TETRIS2000.zip) (51.7 MB)
-* Extract the archive
-* Launch Tetris2000
+## Downloads
+
+* [Linux archive](https://github.com/adrienmalin/TETRIS2000/releases/download/V0.3.1_fbs/TETRIS2000.tar.gz) (78.3 MB)
+* [Windows installer](https://github.com/adrienmalin/TETRIS2000/releases/download/V0.3.1_fbs/TETRIS2000Setup.exe) (53.6 MB)
 
 ## Build
 
-* Install [Python 3](https://www.python.org) with pip
+* On Linux:
 
-* Install qtpy, PyQt5 or PySide2, qdarkstyle, and pyinstaller (Nota: qdarkstyle don't support PySide2 yet):
+  ```bash
+  mkdir TETRIS2000                                           # Create folder
+  cd TETRIS2000                                              # Enter folder
+  git clone https://github.com/adrienmalin/TETRIS2000        # Clone repository
+  python3 -m venv venv                                       # Create a virtual environment
+  source venv/bin/activate                                   # Activate the virtual environment
+  pip install fbs PyQt5==5.9.2 PyInstaller==3.3.1 qdarkstyle # Install requirements
+  python -m fbs run                                          # Run application
+  python -m fbs freeze                                       # Freeze
+  ```
 
-    ```bash
-    pip3 install --user qtpy
-    pip3 install --user PyQt5
-    pip3 install --user qdarkstyle
-    pip3 install --user pyinstaller
-    ```
-  
-* Clone repository:
+* On Windows:
 
-    ```bash
-    git clone https://github.com/adrienmalin/Tetris2000
-    ```
-    
-* Build with pyinstaller:
-
-    ```bash
-    pyinstaller TETRIS2000.spec
-    ```
+  ```bash
+  REM Create and enter folder
+  mkdir TETRIS2000
+  cd TETRIS2000
+  REM Clone repository
+  git clone https://github.com/adrienmalin/TETRIS2000
+  REM Create and activate  a virtual environment
+  python -m venv venv
+  call venv\scripts\activate.bat
+  REM Install requirements
+  pip install fbs PyQt5==5.9.2 PyInstaller==3.3.1 qdarkstyle
+  REM Run application
+  python -m fbs run
+  REM Create installer
+  python -m fbs installer
+  ```
 
 ## Credits
 
