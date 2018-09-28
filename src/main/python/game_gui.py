@@ -7,13 +7,14 @@ import itertools
 import locale
 import os
 import time
-from qtpy import QtWidgets, QtCore, QtGui, QtMultimedia
+from PyQt5 import QtWidgets, QtCore, QtGui, QtMultimedia
+QtCore.Signal = QtCore.pyqtSignal
 
-from . import consts
-from .consts import L, R, CLOCKWISE, COUNTERCLOCKWISE
-from .__version__ import __title__, __author__, __version__
-from .point import Point
-from .tetromino import Block, Tetromino, GhostPiece
+import consts
+from consts import L, R, CLOCKWISE, COUNTERCLOCKWISE
+from __version__ import __title__, __author__, __version__
+from point import Point
+from tetromino import Block, Tetromino, GhostPiece
 
 
 class Grid(QtWidgets.QWidget):
@@ -92,10 +93,10 @@ class Matrix(Grid):
     drop_signal = QtCore.Signal(int)
     lock_signal = QtCore.Signal(int, str)
 
-    def __init__(self, frames):
+    def __init__(self, frames, app):
         super().__init__(frames)
 
-        self.load_sfx()
+        self.load_sfx(app)
 
         self.game_over = False
         self.text = ""
@@ -112,17 +113,17 @@ class Matrix(Grid):
 
         self.cells = []
 
-    def load_sfx(self):
+    def load_sfx(self, app):
         self.wall_sfx = QtMultimedia.QSoundEffect(self)
-        url = QtCore.QUrl.fromLocalFile(consts.WALL_SFX_PATH)
+        url = QtCore.QUrl.fromLocalFile(app.get_resource(consts.WALL_SFX_PATH))
         self.wall_sfx.setSource(url)
 
         self.rotate_sfx = QtMultimedia.QSoundEffect(self)
-        url = QtCore.QUrl.fromLocalFile(consts.ROTATE_SFX_PATH)
+        url = QtCore.QUrl.fromLocalFile(app.get_resource(consts.ROTATE_SFX_PATH))
         self.rotate_sfx.setSource(url)
 
         self.hard_drop_sfx = QtMultimedia.QSoundEffect(self)
-        url = QtCore.QUrl.fromLocalFile(consts.HARD_DROP_SFX_PATH)
+        url = QtCore.QUrl.fromLocalFile(app.get_resource(consts.HARD_DROP_SFX_PATH))
         self.hard_drop_sfx.setSource(url)
 
     def new_game(self):
@@ -551,12 +552,12 @@ class Stats(QtWidgets.QWidget):
 
     temporary_text = QtCore.Signal(str)
 
-    def __init__(self, frames):
+    def __init__(self, frames, app):
         super().__init__(frames)
         self.frames = frames
         self.setStyleSheet("background-color: transparent")
 
-        self.load_sfx()
+        self.load_sfx(app)
 
         self.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
@@ -569,13 +570,13 @@ class Stats(QtWidgets.QWidget):
 
         self.high_score = int(qsettings.value(self.tr("High score"), 0))
 
-    def load_sfx(self):
+    def load_sfx(self, app):
         self.line_clear_sfx = QtMultimedia.QSoundEffect(self)
-        url = QtCore.QUrl.fromLocalFile(consts.LINE_CLEAR_SFX_PATH)
+        url = QtCore.QUrl.fromLocalFile(app.get_resource(consts.LINE_CLEAR_SFX_PATH))
         self.line_clear_sfx.setSource(url)
 
         self.tetris_sfx = QtMultimedia.QSoundEffect(self)
-        url = QtCore.QUrl.fromLocalFile(consts.TETRIS_SFX_PATH)
+        url = QtCore.QUrl.fromLocalFile(app.get_resource(consts.TETRIS_SFX_PATH))
         self.tetris_sfx.setSource(url)
 
     def new_game(self):
@@ -790,8 +791,9 @@ class Frames(QtWidgets.QWidget):
     Manage interactions between them.
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, app):
         super().__init__(parent)
+        self.app = app
         self.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
         )
@@ -801,9 +803,9 @@ class Frames(QtWidgets.QWidget):
         self.load_music()
 
         self.hold_queue = HoldQueue(self)
-        self.matrix = Matrix(self)
+        self.matrix = Matrix(self, app)
         self.next_piece = Grid(self)
-        self.stats = Stats(self)
+        self.stats = Stats(self, app)
         self.next_queue = NextQueue(self)
 
         self.matrices = (self.hold_queue, self.matrix, self.next_piece)
@@ -852,7 +854,7 @@ class Frames(QtWidgets.QWidget):
         self.matrix.lock_signal.connect(self.stats.update_score)
 
         self.bg_image = QtGui.QImage(
-                os.path.join(consts.BG_IMAGE_DIR, consts.START_BG_IMAGE_NAME)
+                os.path.join(app.get_resource(consts.START_BG_IMAGE_PATH))
         )
         self.resize_bg_image()
         
@@ -860,8 +862,9 @@ class Frames(QtWidgets.QWidget):
 
     def load_music(self):
         playlist = QtMultimedia.QMediaPlaylist(self)
-        for entry in os.scandir(consts.MUSICS_DIR):
-            path = os.path.join(consts.MUSICS_DIR, entry.name)
+        MUSICS_DIR = self.app.get_resource(consts.MUSICS_DIR)
+        for entry in os.scandir(MUSICS_DIR):
+            path = os.path.join(MUSICS_DIR, entry.name)
             url = QtCore.QUrl.fromLocalFile(path)
             music = QtMultimedia.QMediaContent(url)
             playlist.addMedia(music)
@@ -901,9 +904,10 @@ class Frames(QtWidgets.QWidget):
         self.resize_bg_image()
 
     def reset_backgrounds(self):
+        BG_IMAGE_DIR = self.app.get_resource(consts.BG_IMAGE_DIR)
         backgrounds = tuple(
-            QtGui.QImage((os.path.join(consts.BG_IMAGE_DIR, entry.name)))
-            for entry in os.scandir(consts.BG_IMAGE_DIR)
+            QtGui.QImage((os.path.join(BG_IMAGE_DIR, entry.name)))
+            for entry in os.scandir(BG_IMAGE_DIR)
         )
         self.backgrounds_cycle = itertools.cycle(backgrounds)
 
@@ -1223,21 +1227,21 @@ class SettingsDialog(QtWidgets.QDialog):
 class Window(QtWidgets.QMainWindow):
     """ Main window """
 
-    def __init__(self):
+    def __init__(self, app):
         splash_screen = QtWidgets.QSplashScreen(
-            QtGui.QPixmap(consts.SPLASH_SCREEN_PATH)
+            QtGui.QPixmap(app.get_resource(consts.SPLASH_SCREEN_PATH))
         )
         splash_screen.show()
-
-        self.set_locale()
-
-        self.load_settings()
 
         super().__init__()
         self.setWindowTitle(__title__.upper())
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
 
-        self.setWindowIcon(QtGui.QIcon(consts.ICON_PATH))
+        self.set_locale(app)
+
+        self.load_settings()
+
+        self.setWindowIcon(app.app_icon)
         # Windows' taskbar icon
         try:
             ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
@@ -1252,16 +1256,14 @@ class Window(QtWidgets.QMainWindow):
         except ImportError:
             pass
         else:
+            os.environ['QT_API'] = 'pyqt5'
             self.setStyleSheet(qdarkstyle.load_stylesheet_from_environment())
 
         for font_path in consts.STATS_FONT_PATH, consts.MATRIX_FONT_PATH:
-            QtGui.QFontDatabase.addApplicationFont(font_path)
+            QtGui.QFontDatabase.addApplicationFont(app.get_resource(font_path))
 
-        self.frames = Frames(self)
+        self.frames = Frames(self, app)
         self.setCentralWidget(self.frames)
-        self.hold_queue = self.frames.hold_queue
-        self.matrix = self.frames.matrix
-        self.stats = self.frames.stats
 
         self.menu = self.menuBar()
 
@@ -1277,25 +1279,29 @@ class Window(QtWidgets.QMainWindow):
         )
 
         splash_screen.finish(self)
+        
+    def show(self):
+        super().show()
+        self.frames.new_game()
 
-    def set_locale(self):
-        app = QtWidgets.QApplication.instance()
+    def set_locale(self, app):
+        qapp = QtWidgets.QApplication.instance()
 
         # Set appropriate thounsand separator characters
         locale.setlocale(locale.LC_ALL, "")
         # Qt
         language = QtCore.QLocale.system().name()[:2]
 
-        qt_translator = QtCore.QTranslator(app)
+        qt_translator = QtCore.QTranslator(qapp)
         qt_translation_path = QtCore.QLibraryInfo.location(
             QtCore.QLibraryInfo.TranslationsPath
         )
         if qt_translator.load("qt_" + language, qt_translation_path):
-            app.installTranslator(qt_translator)
+            qapp.installTranslator(qt_translator)
 
-        tetris2000_translator = QtCore.QTranslator(app)
-        if tetris2000_translator.load(language, consts.LOCALE_PATH):
-            app.installTranslator(tetris2000_translator)
+        tetris2000_translator = QtCore.QTranslator(qapp)
+        if tetris2000_translator.load(language, app.get_resource(consts.LOCALE_PATH)):
+            qapp.installTranslator(tetris2000_translator)
 
     def load_settings(self):
         global s
@@ -1517,7 +1523,7 @@ Sound effects made with voc-one by Simple-Media"""
         self.frames.music.stop()
 
         #  Save settings
-        qsettings.setValue(self.tr("High score"), self.stats.high_score)
+        qsettings.setValue(self.tr("High score"), self.frames.stats.high_score)
         qsettings.setValue("WindowGeometry", self.saveGeometry())
         qsettings.setValue("WindowState", int(self.windowState()))
 

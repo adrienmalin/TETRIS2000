@@ -3,30 +3,27 @@
 
 
 import os
-from qtpy import QtGui
+from PyQt5 import QtGui
 
 
 # Paths
-PATH = os.path.dirname(os.path.abspath(__file__))
-PATH = os.path.dirname(PATH)
-ICON_PATH = os.path.join(PATH, "icons", "icon.ico")
-BG_IMAGE_DIR = os.path.join(PATH, "backgrounds")
-START_BG_IMAGE_NAME = "01-spacefield_a-000.png"
-MUSICS_DIR = os.path.join(PATH, "musics")
-SFX_DIR = os.path.join(PATH, "sfx")
+ICON_PATH = "icons/icon.ico"
+BG_IMAGE_DIR = "backgrounds"
+START_BG_IMAGE_PATH = os.path.join(BG_IMAGE_DIR, "01-spacefield_a-000.png")
+MUSICS_DIR = "musics"
+SFX_DIR = "sfx"
 LINE_CLEAR_SFX_PATH = os.path.join(SFX_DIR, "line_clear.wav")
 TETRIS_SFX_PATH = os.path.join(SFX_DIR, "tetris.wav")
 ROTATE_SFX_PATH = os.path.join(SFX_DIR, "rotate.wav")
 HARD_DROP_SFX_PATH = os.path.join(SFX_DIR, "hard_drop.wav")
 WALL_SFX_PATH = os.path.join(SFX_DIR, "wall.wav")
-LOCALE_PATH = os.path.join(PATH, "locale")
-FONTS_DIR = os.path.join(PATH, "fonts")
+LOCALE_PATH = "locale"
+FONTS_DIR = "fonts"
 STATS_FONT_PATH = os.path.join(FONTS_DIR, "PixelCaps!.otf")
 STATS_FONT_NAME = "PixelCaps!"
 MATRIX_FONT_PATH = os.path.join(FONTS_DIR, "maass slicer Italic.ttf")
 MATRIX_FONT_NAME = "Maassslicer"
-
-SPLASH_SCREEN_PATH = os.path.join(PATH, "icons", "splash_screen.png")
+SPLASH_SCREEN_PATH = "splashscreen/splashscreen.png"
 
 # Coordinates and direction
 L, R, U, D = -1, 1, -1, 1  # Left, Right, Up, Down

@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
-from qtpy import QtCore
+from PyQt5 import QtCore
 
-from .consts import CLOCKWISE
+from consts import CLOCKWISE
 
 
 class Point(QtCore.QPoint):
