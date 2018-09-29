@@ -26,7 +26,7 @@ Yet another Tetris clone, with Qt5 on Python 3
 
 * On Windows:
 
-  ```bash
+  ```batch
   REM Create and enter folder
   mkdir TETRIS2000
   cd TETRIS2000
