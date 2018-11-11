@@ -26,12 +26,10 @@ Yet another Tetris clone, with Qt5 on Python 3
 
 * On Windows:
 
+    Download and extract [source](https://github.com/adrienmalin/TETRIS2000/archive/master.zip)
+    Open a command prompt and go to extracted directory
+    
   ```batch
-  REM Create and enter folder
-  mkdir TETRIS2000
-  cd TETRIS2000
-  REM Clone repository
-  git clone https://github.com/adrienmalin/TETRIS2000
   REM Create and activate  a virtual environment
   python -m venv venv
   call venv\scripts\activate.bat
