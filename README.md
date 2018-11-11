@@ -26,7 +26,7 @@ Yet another Tetris clone, with Qt5 on Python 3
 
 * On Windows:
 
-    Download and extract [source](https://github.com/adrienmalin/TETRIS2000/archive/master.zip)
+    Download and extract [source](https://github.com/adrienmalin/TETRIS2000/archive/master.zip).
     Open a command prompt and go to extracted directory
     
   ```batch
