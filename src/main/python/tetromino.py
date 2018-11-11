@@ -162,7 +162,7 @@ class TetroI(Tetromino, metaclass=MetaTetro):
     four minoes in a straight line
     """
 
-    COORDS = (L, 0), (0, 0), (R, 0), (2 * R, 0)
+    COORDS = (0, 0), (L, 0), (R, 0), (2 * R, 0)
     SUPER_ROTATION_SYSTEM = (
         {
             COUNTERCLOCKWISE: ((0, D), (L, D), (2 * R, D), (L, U), (2 * R, 2 * D)),

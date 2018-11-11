@@ -7,6 +7,7 @@ import itertools
 import locale
 import os
 import time
+import functools
 from PyQt5 import QtWidgets, QtCore, QtGui, QtMultimedia
 QtCore.Signal = QtCore.pyqtSignal
 
@@ -588,6 +589,7 @@ class Stats(QtWidgets.QWidget):
         self.mini_t_spin_total = 0
         self.nb_back_to_back = 0
         self.back_to_back_scores = None
+        self.max_back_to_back_score = 0
         self.combo = -1
         self.combos_total = 0
         self.max_combo = 0
@@ -691,6 +693,7 @@ class Stats(QtWidgets.QWidget):
                 self.temporary_text.emit(
                     self.tr("BACK TO BACK\n{:n}").format(b2b_score)
                 )
+                self.max_back_to_back_score = max(self.max_back_to_back_score, b2b_score)
             self.back_to_back_scores = None
 
         self.high_score = max(self.score_total, self.high_score)
@@ -717,56 +720,38 @@ class Stats(QtWidgets.QWidget):
         painter.drawText(
             QtCore.QRectF(self.rect()), self.text(sep="\n\n"), self.text_options
         )
+        
+    """
+    Returns a strings representing number with the locale thousand separator
+    """
+    thousand_separated = functools.partial(locale.format, "%i", grouping=True, monetary=True)
 
     def text(self, full_stats=False, sep="\n"):
         text = (
-            self.tr("Score: ")
-            + locale.format("%i", self.score_total, grouping=True, monetary=True)
-            + sep
-            + self.tr("High score: ")
-            + locale.format("%i", self.high_score, grouping=True, monetary=True)
-            + sep
+            self.tr("Score: ") + self.thousand_separated(self.score_total) + sep
+            + self.tr("High score: ") + self.thousand_separated(self.high_score) + sep
             + self.tr("Time: {}\n").format(
                 time.strftime("%H:%M:%S", time.gmtime(self.chronometer))
-            )
-            + sep
-            + self.tr("Level: ")
-            + locale.format("%i", self.level, grouping=True, monetary=True)
-            + sep
-            + self.tr("Goal: ")
-            + locale.format("%i", self.goal, grouping=True, monetary=True)
-            + sep
-            + self.tr("Lines: ")
-            + locale.format(
-                "%i", self.complete_lines_total, grouping=True, monetary=True
-            )
-            + sep
-            + self.tr("Mini T-Spins: ")
-            + locale.format("%i", self.mini_t_spin_total, grouping=True, monetary=True)
-            + sep
-            + self.tr("T-Spins: ")
-            + locale.format("%i", self.t_spin_total, grouping=True, monetary=True)
-            + sep
-            + self.tr("Back-to-back: ")
-            + locale.format("%i", self.nb_back_to_back, grouping=True, monetary=True)
-            + sep
-            + self.tr("Max combo: ")
-            + locale.format("%i", self.max_combo, grouping=True, monetary=True)
-            + sep
-            + self.tr("Combos: ")
-            + locale.format("%i", self.combos_total, grouping=True, monetary=True)
+            ) + sep
+            + self.tr("Level: ") + self.thousand_separated(self.level) + sep
+            + self.tr("Goal: ") + self.thousand_separated(self.goal) + sep
+            + self.tr("Lines: ") + self.thousand_separated(self.complete_lines_total) + sep
+            + self.tr("Mini T-Spins: ") + self.thousand_separated(self.mini_t_spin_total) + sep
+            + self.tr("T-Spins: ") + self.thousand_separated(self.t_spin_total) + sep
+            + self.tr("Back-to-backs: ") + self.thousand_separated(self.nb_back_to_back) + sep
+            + self.tr("Max back-to-back score: ") + self.thousand_separated(self.max_back_to_back_score) + sep
+            + self.tr("Max combo: ") + self.thousand_separated(self.max_combo) + sep
+            + self.tr("Combos: ") + self.thousand_separated(self.combos_total)
         )
         if full_stats:
             minutes = self.chronometer / 60
             text += (
-                "\n"
-                + sep
+                "\n" + sep
                 + self.tr("Lines per minute: {:.1f}").format(
                     self.complete_lines_total / minutes
-                )
-                + sep
+                ) + sep
                 + self.tr("Tetrominos locked down: ")
-                + locale.format("%i", self.nb_tetro, grouping=True, monetary=True)
+                + self.thousand_separated(self.nb_tetro)
                 + sep
                 + self.tr("Tetrominos per minute: {:.1f}").format(
                     self.nb_tetro / minutes
@@ -774,9 +759,7 @@ class Stats(QtWidgets.QWidget):
                 + sep
             )
             text += sep.join(
-                score_type["name"]
-                + self.tr(": ")
-                + locale.format("%i", nb, grouping=True, monetary=True)
+                score_type["name"] + self.tr(": ") + self.thousand_separated(nb)
                 for score_type, nb in tuple(zip(consts.SCORES, self.lines_stats))[1:]
             )
         return text

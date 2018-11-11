@@ -8,10 +8,10 @@ Parts of comments issued from 2009 Tetris Design Guideline
 """
 
 
+import sys
+
 from fbs_runtime.application_context import ApplicationContext
 from game_gui import Window
-
-import sys
 
 class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
     def run(self):                              # 2. Implement run()
