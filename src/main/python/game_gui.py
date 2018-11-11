@@ -25,7 +25,7 @@ class Grid(QtWidgets.QWidget):
     ROWS = consts.GRID_DEFAULT_ROWS + consts.GRID_INVISIBLE_ROWS
     COLUMNS = consts.GRID_DEFAULT_COLUMNS
     STARTING_POSITION = Point(
-        consts.GRID_DEFAULT_COLUMNS // 2,
+        consts.GRID_DEFAULT_COLUMNS // 2 - 1,
         consts.GRID_DEFAULT_ROWS // 2 + consts.GRID_INVISIBLE_ROWS,
     )
     GRIDLINE_COLOR = consts.GRID_GRIDLINE_COLOR
@@ -493,7 +493,7 @@ class NextQueue(Grid):
 
     def insert_pieces(self):
         for y, piece in enumerate(self.pieces):
-            piece.insert_into(self, Point(3, 3 * y + 1))
+            piece.insert_into(self, self.STARTING_POSITION + Point(0, 3 * y - 4))
 
     def paintEvent(self, event=None):
         if not settings[s.OTHER][s.SHOW_NEXT_QUEUE]:

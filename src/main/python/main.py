@@ -20,6 +20,6 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
         return self.app.exec_()                 # 3. End run() with this line
 
 if __name__ == '__main__':
-    appctxt = AppContext()                      # 4. Instantiate the subclass
-    exit_code = appctxt.run()                   # 5. Invoke run()
+    app = AppContext()                      # 4. Instantiate the subclass
+    exit_code = app.run()                   # 5. Invoke run()
     sys.exit(exit_code)
