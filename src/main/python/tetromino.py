@@ -191,10 +191,13 @@ class TetroT(Tetromino, metaclass=MetaTetro):
     """
 
     COORDS = (0, 0), (L, 0), (0, U), (R, 0)
-    T_SLOT_A = ((L, U), (R, U), (R, D), (L, D))
-    T_SLOT_B = ((R, U), (R, D), (L, D), (L, U))
-    T_SLOT_C = ((L, D), (L, U), (R, U), (R, D))
-    T_SLOT_D = ((R, D), (L, D), (L, U), (R, U))
+    
+    T_SLOT = (
+        ((L, U), (R, U), (L, D), (R, D)),
+        ((R, U), (R, D), (L, U), (L, D)),
+        ((R, D), (L, D), (R, U), (L, U)),
+        ((L, D), (L, U), (R, D), (R, U)),
+    )
 
     def __init__(self):
         super().__init__()
@@ -211,10 +214,10 @@ class TetroT(Tetromino, metaclass=MetaTetro):
         rotated = super().rotate(direction)
         if rotated:
             center = self.minoes[0].coord
-            pa = center + Point(*self.T_SLOT_A[self.orientation])
-            pb = center + Point(*self.T_SLOT_B[self.orientation])
-            pc = center + Point(*self.T_SLOT_C[self.orientation])
-            pd = center + Point(*self.T_SLOT_D[self.orientation])
+            pa = center + Point(*self.T_SLOT[self.orientation][0])
+            pb = center + Point(*self.T_SLOT[self.orientation][1])
+            pc = center + Point(*self.T_SLOT[self.orientation][2])
+            pd = center + Point(*self.T_SLOT[self.orientation][3])
 
             a = not self.matrix.is_empty_cell(pa)
             b = not self.matrix.is_empty_cell(pb)
