@@ -641,7 +641,6 @@ class Stats(QtWidgets.QWidget):
         # ==============================================================================
         # Combo
         # Bonus for complete lines on each consecutive lock downs
-        # if nb_complete_lines:
         # ==============================================================================
         if nb_complete_lines:
             self.combo += 1
