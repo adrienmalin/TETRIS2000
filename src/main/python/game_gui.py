@@ -278,6 +278,7 @@ class Matrix(Grid):
 
         elif action == s.SOFT_DROP:
             if self.piece.soft_drop():
+                self.lock_wait()
                 self.drop_signal.emit(1)
                 self.wall_hit = False
             else:
@@ -304,6 +305,9 @@ class Matrix(Grid):
     def lock_start(self):
         if not self.lock_timer.isActive():
             self.lock_timer.start(self.lock_delay)
+            for mino in self.piece.minoes:
+                mino.shine(1)
+            self.update()
 
     def lock_wait(self):
         if self.lock_timer.isActive():
