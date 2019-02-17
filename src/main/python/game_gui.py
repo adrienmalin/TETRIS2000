@@ -111,6 +111,9 @@ class Matrix(Grid):
         self.auto_repeat_timer.timeout.connect(self.auto_repeat)
         self.fall_timer = QtCore.QTimer()
         self.fall_timer.timeout.connect(self.fall)
+        self.lock_timer = QtCore.QTimer()
+        self.lock_timer.timeout.connect(self.lock_phase)
+        self.lock_timer.setSingleShot(True)
 
         self.cells = []
 
@@ -277,9 +280,11 @@ class Matrix(Grid):
             if self.piece.soft_drop():
                 self.drop_signal.emit(1)
                 self.wall_hit = False
-            elif not self.wall_hit:
-                self.wall_hit = True
-                self.wall_sfx.play()
+            else:
+                self.lock_start()
+                if not self.wall_hit:
+                    self.wall_hit = True
+                    self.wall_sfx.play()
 
         elif action == s.HARD_DROP:
             trail = self.piece.hard_drop()
@@ -296,8 +301,13 @@ class Matrix(Grid):
         """ Reset the animation movement of the Matrix on a hard drop """
         self.top_left_corner -= Point(0, self.HARD_DROP_MOVEMENT * Block.side)
 
+    def lock_start(self):
+        if not self.lock_timer.isActive():
+            self.lock_timer.start(self.lock_delay)
+
     def lock_wait(self):
-        self.fall_delay = time.time() + (self.speed + self.lock_delay) / 1000
+        if self.lock_timer.isActive():
+            self.lock_timer.start(self.lock_delay)
 
     def fall(self):
         """
@@ -311,8 +321,7 @@ class Matrix(Grid):
             if self.piece.move(0, 1):
                 self.lock_wait()
             else:
-                if time.time() >= self.fall_delay:
-                    self.lock_phase()
+                self.lock_start()
 
     def lock_phase(self):
         """
@@ -324,6 +333,10 @@ class Matrix(Grid):
         it is given a delay (self.fall_delay) on a Lock Down Timer
         before it actually Locks Down.
         """
+
+        if self.piece.move(0, 1):
+            self.lock_wait()
+            return
 
         self.wall_sfx.play()
 
@@ -743,7 +756,7 @@ class Stats(QtWidgets.QWidget):
             + self.tr("Combos: ") + self.thousand_separated(self.combos_total)
         )
         if full_stats:
-            minutes = self.chronometer / 60
+            minutes = self.chronometer / 60 or 1
             text += (
                 "\n" + sep
                 + self.tr("Lines per minute: {:.1f}").format(
@@ -917,7 +930,7 @@ class Frames(QtWidgets.QWidget):
             answer = QtWidgets.QMessageBox.question(
                 self,
                 self.tr("New game"),
-                self.tr("A game is in progress.\n" "Do you want to abord it?"),
+                self.tr("A game is in progress.\nDo you want to abord it?"),
                 QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel,
                 QtWidgets.QMessageBox.Cancel,
             )
@@ -962,7 +975,6 @@ class Frames(QtWidgets.QWidget):
         if self.stats.goal <= 0:
             self.new_level()
         self.matrix.insert(self.next_piece.piece)
-        self.matrix.lock_wait()
         self.next_piece.insert(self.next_queue.pieces[0])
         self.next_queue.new_piece()
         self.hold_enabled = settings[s.OTHER][s.HOLD_ENABLED]
