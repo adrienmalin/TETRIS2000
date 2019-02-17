@@ -70,7 +70,8 @@ class Tetromino:
 
     def __init__(self):
         self.orientation = 0
-        self.t_spin = ""
+        self.rotation_point_5_used = False
+        self.rotated_last = False
 
     def insert_into(self, matrix, position):
         self.matrix = matrix
@@ -108,11 +109,15 @@ class Tetromino:
         Movement into occupied cells and Matrix walls and floors is not allowed
         Update the Grid if there is no drop trail
         """
-        return self._try_movement(
+        if self._try_movement(
             (block.coord + Point(horizontally, vertically) for block in self.minoes),
             trail,
             update
-        )
+        ):
+            self.rotated_last = False
+            return True
+        else:
+            return False
 
     def rotate(self, direction=CLOCKWISE):
         """
@@ -130,9 +135,12 @@ class Tetromino:
             mino.coord.rotate(self.minoes[0].coord, direction) for mino in self.minoes
         )
 
-        for movement in self.SUPER_ROTATION_SYSTEM[self.orientation][direction]:
+        for rotation_point, movement in enumerate(self.SUPER_ROTATION_SYSTEM[self.orientation][direction]):
             if self._try_movement(coord + Point(*movement) for coord in rotated_coords):
                 self.orientation = (self.orientation + direction) % 4
+                self.rotated_last = True
+                if rotation_point == 4:
+                    self.rotation_point_5_used = True
                 return True
         return False
 
@@ -154,6 +162,9 @@ class Tetromino:
             if show_trail:
                 trail += 1
         return trail
+    
+    def t_spin(self):
+        return ""
 
 
 class TetroI(Tetromino, metaclass=MetaTetro):
@@ -192,17 +203,12 @@ class TetroT(Tetromino, metaclass=MetaTetro):
 
     COORDS = (0, 0), (L, 0), (0, U), (R, 0)
     
-    T_SLOT = (
-        ((L, U), (R, U), (L, D), (R, D)),
-        ((R, U), (R, D), (L, U), (L, D)),
-        ((R, D), (L, D), (R, U), (L, U)),
-        ((L, D), (L, U), (R, D), (R, U)),
-    )
+    T_SLOT = ((L, U), (R, U), (R, D), (L, D))
 
     def __init__(self):
         super().__init__()
 
-    def rotate(self, direction=CLOCKWISE):
+    def t_spin(self):
         """
         Detects T-Spins:
         this action can be achieved by first landing a T-Tetrimino,
@@ -211,24 +217,29 @@ class TetroT(Tetromino, metaclass=MetaTetro):
         any three of the four cells diagonally adjacent to the center of self
         are occupied by existing Blocks.)
         """
-        rotated = super().rotate(direction)
-        if rotated:
-            center = self.minoes[0].coord
-            pa = center + Point(*self.T_SLOT[self.orientation][0])
-            pb = center + Point(*self.T_SLOT[self.orientation][1])
-            pc = center + Point(*self.T_SLOT[self.orientation][2])
-            pd = center + Point(*self.T_SLOT[self.orientation][3])
+        if not self.rotated_last:
+            return ""
+        
+        if self.rotation_point_5_used:
+            return "T-Spin"
+        
+        center = self.minoes[0].coord
+        pa = center + Point(*self.T_SLOT[self.orientation])
+        pb = center + Point(*self.T_SLOT[(self.orientation+1)%4])
+        pc = center + Point(*self.T_SLOT[(self.orientation+2)%4])
+        pd = center + Point(*self.T_SLOT[(self.orientation+3)%4])
 
-            a = not self.matrix.is_empty_cell(pa)
-            b = not self.matrix.is_empty_cell(pb)
-            c = not self.matrix.is_empty_cell(pc)
-            d = not self.matrix.is_empty_cell(pd)
+        a = not self.matrix.is_empty_cell(pa)
+        b = not self.matrix.is_empty_cell(pb)
+        c = not self.matrix.is_empty_cell(pc)
+        d = not self.matrix.is_empty_cell(pd)
 
-            if a and b and (c or d):
-                self.t_spin = "T-Spin"
-            elif c and d and (a or b):
-                self.t_spin = "Mini T-Spin"
-        return rotated
+        if a and b and (c or d):
+            return "T-Spin"
+        elif c and d and (a or b):
+            return "Mini T-Spin"
+        else:
+            return ""
 
 
 class TetroZ(Tetromino, metaclass=MetaTetro):

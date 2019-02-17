@@ -362,7 +362,7 @@ class Matrix(Grid):
                     block.shine()
                 self.spotlight = row[self.COLUMNS // 2].coord
                 self.auto_repeat_timer.stop()
-        self.lock_signal.emit(len(self.complete_lines), self.piece.t_spin)
+        self.lock_signal.emit(len(self.complete_lines), self.piece.t_spin())
 
         if self.complete_lines:
             self.fall_timer.stop()
