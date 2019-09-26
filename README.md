@@ -1,4 +1,4 @@
-#   ![icon](https://raw.githubusercontent.com/adrienmalin/TETRIS2000/master/src/main/icons/linux/48.png "T") TETRIS 2000
+#   ![icon](https://git.malingrey.fr/adrien/TETRIS2000/raw/branch/master/src/main/icons/linux/48.png "T") TETRIS 2000
 
 Yet another Tetris clone, with Qt5 on Python 3
 
@@ -6,35 +6,35 @@ Yet another Tetris clone, with Qt5 on Python 3
 
 ## Downloads
 
-* [Linux archive](https://github.com/adrienmalin/TETRIS2000/releases/download/V0.3.1_fbs/TETRIS2000.tar.gz) (78.3 MB)
+* [Linux archive](https://git.malingrey.fr/adrien/TETRIS2000/archive/V0.3.1_fbs.tar.gz) (78.3 MB)
 * [Windows installer](https://github.com/adrienmalin/TETRIS2000/releases/download/V0.3.1_fbs/TETRIS2000Setup.exe) (53.6 MB)
 
 ## Build
 
 * On Linux:
 
-  ```bash
-  mkdir TETRIS2000                                           # Create folder
-  cd TETRIS2000                                              # Enter folder
-  git clone https://github.com/adrienmalin/TETRIS2000        # Clone repository
-  python3 -m venv venv                                       # Create a virtual environment
-  source venv/bin/activate                                   # Activate the virtual environment
-  pip install fbs PyQt5==5.9.2 PyInstaller==3.3.1 qdarkstyle # Install requirements
-  python -m fbs run                                          # Run application
-  python -m fbs freeze                                       # Freeze
+  ```shell
+  mkdir TETRIS2000                                          # Create folder
+  cd TETRIS2000                                             # Enter folder
+  git clone https://git.malingrey.fr/adrien/TETRIS2000.git  # Clone repository
+  python3 -m venv venv                                      # Create a virtual environment
+  source venv/bin/activate                                  # Activate the virtual environment
+  pip3 install -r requirements.txt                          # Install requirements
+  python -m fbs run                                         # Run application
+  python -m fbs freeze                                      # Freeze
   ```
 
 * On Windows:
 
-    Download and extract [source](https://github.com/adrienmalin/TETRIS2000/archive/master.zip).
+    Download and extract [source](https://git.malingrey.fr/adrien/TETRIS2000/archive/V0.3.1_fbs.zip).
     Open a command prompt and go to extracted directory
     
   ```batch
-  REM Create and activate  a virtual environment
+  REM Create and activate a virtual environment
   python -m venv venv
   call venv\scripts\activate.bat
   REM Install requirements
-  pip install fbs PyQt5==5.9.2 PyInstaller==3.3.1 qdarkstyle
+  pip install -r requirements.txt
   REM Run application
   python -m fbs run
   REM Create installer
